@@ -1,5 +1,7 @@
 package com.celebrate.backend.models;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,6 +33,9 @@ public class Supplier {
 
     @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
+
+    @OneToMany(mappedBy = "supplier")
+    private List<Item> itens;
 
     @ManyToOne
     @JoinColumn(name = "id_address", referencedColumnName = "id")

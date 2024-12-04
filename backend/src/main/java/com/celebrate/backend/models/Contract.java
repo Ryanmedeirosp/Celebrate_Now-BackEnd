@@ -17,7 +17,7 @@ public class Contract {
     @Column(name = "pdf", nullable = false, columnDefinition = "TEXT")
     private String pdf;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "id_budget", referencedColumnName = "id")
     private Budget budget;
 

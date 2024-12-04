@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "ceremonialist")
@@ -32,6 +33,9 @@ public class Ceremonialist {
 
     @Column(name = "phone", nullable = false, length = 25)
     private String phone;
+
+    @OneToMany(mappedBy = "ceremonialist")
+    private List<Budget> budget;
 
     @ManyToOne
     @JoinColumn(name = "id_address", referencedColumnName = "id")

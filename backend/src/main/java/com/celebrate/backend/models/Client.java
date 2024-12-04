@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "client")
@@ -32,6 +33,9 @@ public class Client {
 
     @Column(name = "phone", nullable = false, length = 25)
     private String phone;
+
+    @OneToMany(mappedBy = "client")
+    private List<Budget> budget;
 
     @ManyToOne
     @JoinColumn(name = "id_address", referencedColumnName = "id")

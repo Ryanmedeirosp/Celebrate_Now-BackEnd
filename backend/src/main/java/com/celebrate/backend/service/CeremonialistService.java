@@ -1,5 +1,5 @@
 package com.celebrate.backend.service;
 
-public class CerimonialistService {
+public class CeremonialistService {
     
 }

@@ -16,8 +16,8 @@ public class Budget {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "birthday", nullable = false)
-    private LocalDate birthday;
+    @Column(name = "buget_date", nullable = false)
+    private LocalDate buget_date;
 
     @ManyToOne
     @JoinColumn(name = "id_cerimonialist", referencedColumnName = "id")
@@ -31,8 +31,11 @@ public class Budget {
     @JoinColumn(name = "id_itens", referencedColumnName = "id")
     private Item item;
 
-    public Budget(LocalDate birthday, Ceremonialist ceremonialist, Client client, Item item) {
-        this.birthday = birthday;
+    @OneToOne(mappedBy = "budget")  
+    private Contract contract;
+
+    public Budget(LocalDate buget_date, Ceremonialist ceremonialist, Client client, Item item) {
+        this.buget_date = buget_date;
         this.ceremonialist = ceremonialist;
         this.client = client;
         this.item = item;

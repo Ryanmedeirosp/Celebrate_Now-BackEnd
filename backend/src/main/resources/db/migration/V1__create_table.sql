@@ -32,8 +32,6 @@ CREATE TABLE client(
     id_address INTEGER REFERENCES address(id)
 );
 
-
-
 CREATE TABLE supplier(
     id SERIAL PRIMARY KEY NOT NULL,
     name VARCHAR(50) NOT NULL,
@@ -55,15 +53,15 @@ CREATE TABLE item(
 
 CREATE TABLE budget(
     id SERIAL PRIMARY KEY NOT NULL,
-    birthday DATE NOT NULL,
+    buget_date DATE NOT NULL,
     id_cerimonialist INTEGER REFERENCES ceremonialist(id),
     id_client INTEGER REFERENCES client(id),
-    id_itens INTEGER REFERENCES itens(id)
+    id_itens INTEGER REFERENCES item(id)
 );
 
 
 CREATE TABLE contract(
     id SERIAL PRIMARY KEY NOT NULL,
     pdf TEXT NOT NULL,
-    id_buget INTEGER REFERENCES budget(id),
+    id_buget INTEGER REFERENCES budget(id)
 );
