@@ -6,10 +6,10 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "client")
+@Table(name = "ceremonialist")
 @Data
 @NoArgsConstructor
-public class Client {
+public class Ceremonialist {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,8 +24,8 @@ public class Client {
     @Column(name = "password", nullable = false, length = 50)
     private String password;
 
-    @Column(name = "cpf", nullable = false, length = 11)
-    private String cpf;
+    @Column(name = "document", nullable = false, length = 14)
+    private String document;
 
     @Column(name = "birthday", nullable = false)
     private LocalDate birthday;
@@ -37,11 +37,11 @@ public class Client {
     @JoinColumn(name = "id_address", referencedColumnName = "id")
     private Address address;
 
-    public Client(String name, String email, String password, String cpf, LocalDate birthday, String phone, Address address) {
+    public Ceremonialist(String name, String email, String password, String document, LocalDate birthday, String phone, Address address) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.cpf = cpf;
+        this.document = document;
         this.birthday = birthday;
         this.phone = phone;
         this.address = address;
