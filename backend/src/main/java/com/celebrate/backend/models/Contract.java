@@ -17,6 +17,9 @@ public class Contract {
     @Column(name = "pdf", nullable = false, columnDefinition = "TEXT")
     private String pdf;
 
+    @Column(name="contract_number", nullable = false)
+    private Integer contract_number;
+
     @OneToOne
     @JoinColumn(name = "id_budget", referencedColumnName = "id")
     private Budget budget;

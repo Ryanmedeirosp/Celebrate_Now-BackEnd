@@ -62,6 +62,7 @@ CREATE TABLE budget(
 
 CREATE TABLE contract(
     id SERIAL PRIMARY KEY NOT NULL,
+    contract_number INTEGER NOT NULL,
     pdf TEXT NOT NULL,
     id_buget INTEGER REFERENCES budget(id)
 );
