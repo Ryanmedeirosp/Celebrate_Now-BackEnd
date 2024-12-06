@@ -4,18 +4,19 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.celebrate.backend.client.ViaCepClient;
 import com.celebrate.backend.models.Ceremonialist;
-import com.celebrate.backend.repository.AddressRepository;
+import com.celebrate.backend.models.Dto.CreateCeremonialist;
 import com.celebrate.backend.repository.CeremonialistRepository;
 
 @Service
 public class CeremonialistService {
     private final CeremonialistRepository ceremonialistRepository;
-    private final AddressRepository addressRepository;
+    private final ViaCepClient viaCepClient;
 
-    public CeremonialistService(CeremonialistRepository ceremonialistRepository, AddressRepository addressRepository) {
+    public CeremonialistService(CeremonialistRepository ceremonialistRepository, ViaCepClient viaCepClient) {
         this.ceremonialistRepository = ceremonialistRepository;
-        this.addressRepository = addressRepository;
+        this.viaCepClient = viaCepClient;
     }
 
     public List<Ceremonialist> getAllCeremonialists() {
@@ -30,6 +31,22 @@ public class CeremonialistService {
         return ceremonialistRepository.save(ceremonialist);
     }
 
-    
+    public void createCeremonialistTest(CreateCeremonialist request){
 
+        Ceremonialist ceremonialist = new Ceremonialist();
+
+        ceremonialist.setName(request.getName());
+        ceremonialist.setEmail(request.getEmail());
+        ceremonialist.setPassword(request.getPassword());
+        ceremonialist.setDocument(request.getDocument());
+        ceremonialist.setBirthday(request.getBirthday());
+        ceremonialist.setPhone(request.getPhone());
+
+        System.out.println(viaCepClient.getAddressByCep(request.getCep()));
+    }
+
+    public void getAddressByCep(CreateCeremonialist request){
+
+        System.out.println(viaCepClient.getAddressByCep(request.getCep()));
+    }
 }
