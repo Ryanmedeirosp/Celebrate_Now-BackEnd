@@ -26,6 +26,10 @@ public class Item {
     @JoinColumn(name = "id_supplier", referencedColumnName = "id")
     private Supplier supplier;
 
+    @ManyToOne
+    @JoinColumn(name = "id_buget", referencedColumnName = "id")
+    private Budget budget;
+
     public Item(BigDecimal price, String description, Supplier supplier) {
         this.price = price;
         this.description = description;

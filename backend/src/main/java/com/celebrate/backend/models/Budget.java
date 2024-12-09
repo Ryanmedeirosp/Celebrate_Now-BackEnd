@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "budget")
@@ -27,17 +28,15 @@ public class Budget {
     @JoinColumn(name = "id_client", referencedColumnName = "id")
     private Client client;
 
-    @ManyToOne
-    @JoinColumn(name = "id_itens", referencedColumnName = "id")
-    private Item item;
+    @OneToMany(mappedBy = "budget")  
+    private List<Item> item;
 
     @OneToOne(mappedBy = "budget")  
     private Contract contract;
 
-    public Budget(LocalDate buget_date, Ceremonialist ceremonialist, Client client, Item item) {
+    public Budget(LocalDate buget_date, Ceremonialist ceremonialist, Client client) {
         this.buget_date = buget_date;
         this.ceremonialist = ceremonialist;
         this.client = client;
-        this.item = item;
     }
 }
