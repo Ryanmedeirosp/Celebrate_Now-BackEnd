@@ -8,8 +8,6 @@ CREATE TABLE address(
     house_number VARCHAR(10) NOT NULL
 );
 
-
-
 CREATE TABLE ceremonialist(
     id SERIAL PRIMARY KEY NOT NULL,
     name VARCHAR(50) NOT NULL,
@@ -43,12 +41,11 @@ CREATE TABLE supplier(
     id_address INTEGER REFERENCES address(id)
 );
 
-
 CREATE TABLE item(
     id SERIAL PRIMARY KEY NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     description TEXT NOT NULL,  
-    id_supplier INTEGER REFERENCES supplier(id)
+    id_supplier INTEGER REFERENCES supplier(id),
 );
 
 CREATE TABLE budget(
@@ -58,7 +55,6 @@ CREATE TABLE budget(
     id_client INTEGER REFERENCES client(id),
     id_itens INTEGER REFERENCES item(id)
 );
-
 
 CREATE TABLE contract(
     id SERIAL PRIMARY KEY NOT NULL,

@@ -34,6 +34,8 @@ public class Supplier {
     @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
 
+    
+
     @OneToMany(mappedBy = "supplier")
     private List<Item> itens;
 
