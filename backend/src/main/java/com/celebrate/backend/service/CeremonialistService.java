@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.celebrate.backend.client.ViaCepClient;
+import com.celebrate.backend.client.response.CepResponse;
+import com.celebrate.backend.models.Address;
 import com.celebrate.backend.models.Ceremonialist;
 import com.celebrate.backend.models.Dto.CreateCeremonialist;
 import com.celebrate.backend.repository.CeremonialistRepository;
@@ -47,6 +49,15 @@ public class CeremonialistService {
 
     public void getAddressByCep(CreateCeremonialist request){
 
-        System.out.println(viaCepClient.getAddressByCep(request.getCep()));
+        CepResponse cepResponse = viaCepClient.getAddressByCep(request.getCep());
+        
+        Address address = new Address();
+
+        address.setCep(request.getCep());
+        address.setState(cepResponse.getEstado());
+        address.setCity(cepResponse.getLocalidade());
+        address.setDistrict(cepResponse.getBairro());
+        address.setStreet(cepResponse.getLogradouro());
+        address.setHouseNumber("333");
     }
 }
