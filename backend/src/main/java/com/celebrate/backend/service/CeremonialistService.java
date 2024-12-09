@@ -41,13 +41,13 @@ public class CeremonialistService {
         Address address = getAddressByCep(request);
 
         //Criação do Orçamento
-        List<Client> clientes = new ArrayList<>();
+        // List<Client> clientes = new ArrayList<>();
 
         //Adição dos dados do Cerimonialista
         Ceremonialist ceremonialist = addDataToCeremonialist(request);
 
         ceremonialist.setAddress(address);
-        ceremonialist.setClients(clientes);
+        // ceremonialist.setClients(clientes);
 
         ceremonialistRepository.save(ceremonialist);
     }
