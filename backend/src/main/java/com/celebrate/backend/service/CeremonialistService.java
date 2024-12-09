@@ -1,5 +1,6 @@
 package com.celebrate.backend.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import com.celebrate.backend.client.ViaCepClient;
 import com.celebrate.backend.client.response.CepResponse;
 import com.celebrate.backend.models.Address;
 import com.celebrate.backend.models.Ceremonialist;
+import com.celebrate.backend.models.Client;
 import com.celebrate.backend.models.Dto.CreateCeremonialist;
 import com.celebrate.backend.repository.CeremonialistRepository;
 
@@ -29,11 +31,28 @@ public class CeremonialistService {
         return ceremonialistRepository.findById(id).orElse(null);
     }
 
-    public Ceremonialist createCeremonialist(Ceremonialist ceremonialist) {
-        return ceremonialistRepository.save(ceremonialist);
+    // public Ceremonialist createCeremonialist(Ceremonialist ceremonialist) {
+    //     return ceremonialistRepository.save(ceremonialist);
+    // }
+
+    public void createCeremonialist(CreateCeremonialist request){
+
+        //Criação do Endereço
+        Address address = getAddressByCep(request);
+
+        //Criação do Orçamento
+        List<Client> clientes = new ArrayList<>();
+
+        //Adição dos dados do Cerimonialista
+        Ceremonialist ceremonialist = addDataToCeremonialist(request);
+
+        ceremonialist.setAddress(address);
+        ceremonialist.setClients(clientes);
+
+        ceremonialistRepository.save(ceremonialist);
     }
 
-    public void createCeremonialistTest(CreateCeremonialist request){
+    public Ceremonialist addDataToCeremonialist(CreateCeremonialist request){
 
         Ceremonialist ceremonialist = new Ceremonialist();
 
@@ -44,10 +63,10 @@ public class CeremonialistService {
         ceremonialist.setBirthday(request.getBirthday());
         ceremonialist.setPhone(request.getPhone());
 
-        System.out.println(viaCepClient.getAddressByCep(request.getCep()));
+        return ceremonialist;
     }
 
-    public void getAddressByCep(CreateCeremonialist request){
+    public Address getAddressByCep(CreateCeremonialist request){
 
         CepResponse cepResponse = viaCepClient.getAddressByCep(request.getCep());
         
@@ -58,6 +77,8 @@ public class CeremonialistService {
         address.setCity(cepResponse.getLocalidade());
         address.setDistrict(cepResponse.getBairro());
         address.setStreet(cepResponse.getLogradouro());
-        address.setHouseNumber("333");
+        address.setHouseNumber(request.getHouseNumber());
+
+        return address;
     }
 }

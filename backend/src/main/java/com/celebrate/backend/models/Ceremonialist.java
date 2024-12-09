@@ -34,8 +34,11 @@ public class Ceremonialist {
     @Column(name = "phone", nullable = false, length = 25)
     private String phone;
 
+    // @OneToMany(mappedBy = "ceremonialist")
+    // private List<Budget> budget;
+
     @OneToMany(mappedBy = "ceremonialist")
-    private List<Budget> budget;
+    private List<Client> clients;
 
     @ManyToOne
     @JoinColumn(name = "id_address", referencedColumnName = "id")

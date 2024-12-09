@@ -41,7 +41,6 @@ CREATE TABLE supplier(
     id_address INTEGER REFERENCES address(id)
 );
 
-
 CREATE TABLE item(
     id SERIAL PRIMARY KEY NOT NULL,
     price DECIMAL(10,2) NOT NULL,
@@ -56,7 +55,6 @@ CREATE TABLE budget(
     id_client INTEGER REFERENCES client(id),
     id_itens INTEGER REFERENCES item(id)
 );
-
 
 CREATE TABLE contract(
     id SERIAL PRIMARY KEY NOT NULL,

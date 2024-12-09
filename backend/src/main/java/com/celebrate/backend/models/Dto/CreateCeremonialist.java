@@ -18,4 +18,5 @@ public class CreateCeremonialist {
     public String phone;
 
     public String cep;
+    public String houseNumber;
 }

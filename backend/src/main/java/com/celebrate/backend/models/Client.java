@@ -34,6 +34,8 @@ public class Client {
     @Column(name = "phone", nullable = false, length = 25)
     private String phone;
 
+    
+
     @OneToMany(mappedBy = "client")
     private List<Budget> budget;
 

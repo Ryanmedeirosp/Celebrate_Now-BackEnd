@@ -21,6 +21,6 @@ public class CeremonialistController {
     public void createCeremonialist(@RequestBody CreateCeremonialist request){
         
         System.out.println(request);
-        ceremonialistService.createCeremonialistTest(request);
+        ceremonialistService.createCeremonialist(request);
     }
 }
