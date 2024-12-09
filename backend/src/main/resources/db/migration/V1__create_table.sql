@@ -8,8 +8,6 @@ CREATE TABLE address(
     house_number VARCHAR(10) NOT NULL
 );
 
-
-
 CREATE TABLE ceremonialist(
     id SERIAL PRIMARY KEY NOT NULL,
     name VARCHAR(50) NOT NULL,
