@@ -27,6 +27,7 @@ CREATE TABLE client(
     cpf VARCHAR(11) NOT NULL,
     birthday DATE NOT NULL,
     phone VARCHAR(25) NOT NULL,
+    id_cerimonialist INTEGER REFERENCES ceremonialist(id)
     id_address INTEGER REFERENCES address(id)
 );
 
@@ -51,7 +52,6 @@ CREATE TABLE item(
 CREATE TABLE budget(
     id SERIAL PRIMARY KEY NOT NULL,
     buget_date DATE NOT NULL,
-    id_cerimonialist INTEGER REFERENCES ceremonialist(id),
     id_client INTEGER REFERENCES client(id),
     id_itens INTEGER REFERENCES item(id)
 );

@@ -16,7 +16,6 @@ public class CreateCeremonialist {
     public String document;
     public LocalDate birthday;
     public String phone;
-
     public String cep;
     public String houseNumber;
 }

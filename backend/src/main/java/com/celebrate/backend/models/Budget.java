@@ -21,10 +21,6 @@ public class Budget {
     private LocalDate buget_date;
 
     @ManyToOne
-    @JoinColumn(name = "id_cerimonialist", referencedColumnName = "id")
-    private Ceremonialist ceremonialist;
-
-    @ManyToOne
     @JoinColumn(name = "id_client", referencedColumnName = "id")
     private Client client;
 
@@ -36,7 +32,6 @@ public class Budget {
 
     public Budget(LocalDate buget_date, Ceremonialist ceremonialist, Client client) {
         this.buget_date = buget_date;
-        this.ceremonialist = ceremonialist;
         this.client = client;
     }
 }

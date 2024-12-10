@@ -11,15 +11,18 @@ import com.celebrate.backend.models.Address;
 import com.celebrate.backend.models.Ceremonialist;
 import com.celebrate.backend.models.Client;
 import com.celebrate.backend.models.Dto.CreateCeremonialist;
+import com.celebrate.backend.repository.AddressRepository;
 import com.celebrate.backend.repository.CeremonialistRepository;
 
 @Service
 public class CeremonialistService {
     private final CeremonialistRepository ceremonialistRepository;
+    private final AddressRepository addressRepository;
     private final ViaCepClient viaCepClient;
 
-    public CeremonialistService(CeremonialistRepository ceremonialistRepository, ViaCepClient viaCepClient) {
+    public CeremonialistService(CeremonialistRepository ceremonialistRepository, AddressRepository addressRepository,ViaCepClient viaCepClient) {
         this.ceremonialistRepository = ceremonialistRepository;
+        this.addressRepository = addressRepository;
         this.viaCepClient = viaCepClient;
     }
 
@@ -31,28 +34,24 @@ public class CeremonialistService {
         return ceremonialistRepository.findById(id).orElse(null);
     }
 
-    // public Ceremonialist createCeremonialist(Ceremonialist ceremonialist) {
-    //     return ceremonialistRepository.save(ceremonialist);
-    // }
-
     public void createCeremonialist(CreateCeremonialist request){
 
         //Criação do Endereço
         Address address = getAddressByCep(request);
 
-        //Criação do Orçamento
-        // List<Client> clientes = new ArrayList<>();
+        //Criação da lista de Clientes
+        List<Client> clients = new ArrayList<>();
 
         //Adição dos dados do Cerimonialista
         Ceremonialist ceremonialist = addDataToCeremonialist(request);
 
         ceremonialist.setAddress(address);
-        // ceremonialist.setClients(clientes);
+        ceremonialist.setClients(clients);
 
         ceremonialistRepository.save(ceremonialist);
     }
 
-    public Ceremonialist addDataToCeremonialist(CreateCeremonialist request){
+    private Ceremonialist addDataToCeremonialist(CreateCeremonialist request){
 
         Ceremonialist ceremonialist = new Ceremonialist();
 
@@ -66,7 +65,7 @@ public class CeremonialistService {
         return ceremonialist;
     }
 
-    public Address getAddressByCep(CreateCeremonialist request){
+    private Address getAddressByCep(CreateCeremonialist request){
 
         CepResponse cepResponse = viaCepClient.getAddressByCep(request.getCep());
         
@@ -78,6 +77,8 @@ public class CeremonialistService {
         address.setDistrict(cepResponse.getBairro());
         address.setStreet(cepResponse.getLogradouro());
         address.setHouseNumber(request.getHouseNumber());
+
+        addressRepository.save(address);
 
         return address;
     }
