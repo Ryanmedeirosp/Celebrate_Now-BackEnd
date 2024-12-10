@@ -9,14 +9,17 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateCeremonialist {
+public class CreateClient {
     
     public String name;
     public String email;
     public String password;
-    public String document;
+    public String cpf;
     public LocalDate birthday;
     public String phone;
+
     public String cep;
     public String houseNumber;
+
+    public String ceremonialistEmail;
 }

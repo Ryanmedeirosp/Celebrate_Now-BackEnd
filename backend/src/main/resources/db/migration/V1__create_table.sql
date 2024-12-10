@@ -27,7 +27,7 @@ CREATE TABLE client(
     cpf VARCHAR(11) NOT NULL,
     birthday DATE NOT NULL,
     phone VARCHAR(25) NOT NULL,
-    id_cerimonialist INTEGER REFERENCES ceremonialist(id)
+    id_cerimonialist INTEGER REFERENCES ceremonialist(id),
     id_address INTEGER REFERENCES address(id)
 );
 
