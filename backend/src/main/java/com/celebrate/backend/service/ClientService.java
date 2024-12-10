@@ -41,7 +41,7 @@ public class ClientService {
 
         Client client = addDataToClient(request);
 
-        Ceremonialist ceremonialist = ceremonialistRepository.findByEmail(request.getEmail())
+        Ceremonialist ceremonialist = ceremonialistRepository.findByEmail(request.getCeremonialistEmail())
         .orElseThrow(() -> new RuntimeException("Ceremonialista não encontrado"));
 
         client.setCeremonialist(ceremonialist);

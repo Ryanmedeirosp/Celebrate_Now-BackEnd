@@ -20,7 +20,6 @@ public class CeremonialistController {
     @PostMapping()
     public void createCeremonialist(@RequestBody CreateCeremonialist request){
         
-        System.out.println(request);
         ceremonialistService.createCeremonialist(request);
     }
 }
