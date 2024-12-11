@@ -34,6 +34,7 @@ public class ItensService {
         item.setSupplier(supplier);
 
         //Ainda será preciso criar o orçamento para terminar de criar o item.
+        //Discutir sobre a necessidade de associar o Orçamento ao Item.
         item.setBudget(null);
 
         itensRepository.save(item);

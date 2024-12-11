@@ -25,7 +25,7 @@ public class Budget {
     private Client client;
 
     @OneToMany(mappedBy = "budget")  
-    private List<Item> item;
+    private List<Item> items;
 
     @OneToOne(mappedBy = "budget")  
     private Contract contract;
