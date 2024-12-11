@@ -24,6 +24,11 @@ public class Budget {
     @JoinColumn(name = "id_client", referencedColumnName = "id")
     private Client client;
 
+    
+    @ManyToOne
+    @JoinColumn(name = "id_supplier", referencedColumnName = "id")
+    private Supplier supplier;
+
     @OneToMany(mappedBy = "budget")  
     private List<Item> items;
 

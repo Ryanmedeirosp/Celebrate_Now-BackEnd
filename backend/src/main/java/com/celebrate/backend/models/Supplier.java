@@ -37,6 +37,9 @@ public class Supplier {
     @OneToMany(mappedBy = "supplier")
     private List<Item> itens;
 
+    @OneToMany(mappedBy = "supplier")
+    private List<Budget> budget;
+
     @ManyToOne
     @JoinColumn(name = "id_cerimonialist", referencedColumnName = "id")
     private Ceremonialist ceremonialist;

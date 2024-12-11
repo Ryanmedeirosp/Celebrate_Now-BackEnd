@@ -54,6 +54,7 @@ CREATE TABLE item(
 CREATE TABLE budget(
     id SERIAL PRIMARY KEY NOT NULL,
     buget_date DATE NOT NULL,
+    id_supplier INTEGER REFERENCES supplier(id),
     id_client INTEGER REFERENCES client(id),
     id_itens INTEGER REFERENCES item(id)
 );
