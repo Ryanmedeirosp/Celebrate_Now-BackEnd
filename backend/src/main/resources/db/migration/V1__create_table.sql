@@ -47,8 +47,8 @@ CREATE TABLE item(
     id SERIAL PRIMARY KEY NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     title VARCHAR(50) NOT NULL,
-    description TEXT NOT NULL,  
-    id_supplier INTEGER REFERENCES supplier(id)
+    description TEXT NOT NULL
+    -- id_budget INTEGER REFERENCES budget(id)
 );
 
 CREATE TABLE budget(
@@ -63,5 +63,5 @@ CREATE TABLE contract(
     id SERIAL PRIMARY KEY NOT NULL,
     contract_number INTEGER NOT NULL,
     pdf TEXT NOT NULL,
-    id_buget INTEGER REFERENCES budget(id)
+    id_budget INTEGER REFERENCES budget(id)
 );

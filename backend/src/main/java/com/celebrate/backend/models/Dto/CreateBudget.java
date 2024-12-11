@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class CreateBudget {
     
     public String clientEmail;
+    public String supplierCnpj;
 }

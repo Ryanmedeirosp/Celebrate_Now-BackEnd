@@ -35,9 +35,6 @@ public class Supplier {
     private String description;
 
     @OneToMany(mappedBy = "supplier")
-    private List<Item> itens;
-
-    @OneToMany(mappedBy = "supplier")
     private List<Budget> budget;
 
     @ManyToOne

@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "item")
 @Data
@@ -26,16 +28,13 @@ public class Item {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "id_supplier", referencedColumnName = "id")
-    private Supplier supplier;
-
-    @ManyToOne
-    @JoinColumn(name = "id_buget", referencedColumnName = "id")
+    @JsonIgnore
+    // @JoinColumn(name = "id_budget", referencedColumnName = "id")
     private Budget budget;
 
     public Item(BigDecimal price, String description, Supplier supplier) {
         this.price = price;
         this.description = description;
-        this.supplier = supplier;
+        
     }
 }

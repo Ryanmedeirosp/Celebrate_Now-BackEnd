@@ -35,10 +35,10 @@ public class SupplierService {
         Address address = getAddressByCep(request);
         Supplier supplier = addDataToSupplier(request);
 
-        List<Item> items = new ArrayList<>();
+       
 
         supplier.setAddress(address);
-        supplier.setItens(items);
+        
 
         supplierRepository.save(supplier);
     }

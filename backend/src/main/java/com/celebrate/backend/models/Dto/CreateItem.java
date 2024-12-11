@@ -14,5 +14,6 @@ public class CreateItem {
     public String title;
     public String description;
     public BigDecimal price;
-    public String supplierCnpj;
+    public Integer budgetId;
+    
 }
