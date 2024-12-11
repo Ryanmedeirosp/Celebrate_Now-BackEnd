@@ -34,10 +34,12 @@ public class Supplier {
     @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
 
-    
-
     @OneToMany(mappedBy = "supplier")
     private List<Item> itens;
+
+    @ManyToOne
+    @JoinColumn(name = "id_cerimonialist", referencedColumnName = "id")
+    private Ceremonialist ceremonialist;
 
     @ManyToOne
     @JoinColumn(name = "id_address", referencedColumnName = "id")

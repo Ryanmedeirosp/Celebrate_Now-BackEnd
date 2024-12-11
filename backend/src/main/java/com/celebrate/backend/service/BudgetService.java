@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.celebrate.backend.models.Budget;
 import com.celebrate.backend.models.Client;
 import com.celebrate.backend.models.Contract;
@@ -13,6 +15,7 @@ import com.celebrate.backend.repository.BudgetRepository;
 import com.celebrate.backend.repository.ClientRepository;
 import com.celebrate.backend.repository.ItensRepository;
 
+@Service
 public class BudgetService {
     
     private final BudgetRepository budgetRepository;

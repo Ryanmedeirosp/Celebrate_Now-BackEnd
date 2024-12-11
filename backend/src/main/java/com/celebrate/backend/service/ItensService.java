@@ -2,6 +2,7 @@ package com.celebrate.backend.service;
 
 import org.springframework.stereotype.Service;
 
+import com.celebrate.backend.models.Budget;
 import com.celebrate.backend.models.Item;
 import com.celebrate.backend.models.Supplier;
 import com.celebrate.backend.models.Dto.CreateItem;
@@ -27,6 +28,8 @@ public class ItensService {
 
         Item item = new Item();
 
+        Budget budget = new Budget();
+
         item.setTitle(request.getTitle());
         item.setDescription(request.getDescription());
         item.setPrice(request.getPrice());
@@ -35,7 +38,7 @@ public class ItensService {
 
         //Ainda será preciso criar o orçamento para terminar de criar o item.
         //Discutir sobre a necessidade de associar o Orçamento ao Item.
-        item.setBudget(null);
+        item.setBudget(budget);
 
         itensRepository.save(item);
     }

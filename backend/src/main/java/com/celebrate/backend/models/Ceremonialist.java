@@ -37,6 +37,9 @@ public class Ceremonialist {
     @OneToMany(mappedBy = "ceremonialist")
     private List<Client> clients;
 
+    @OneToMany(mappedBy = "ceremonialist")
+    private List<Supplier> supplier;
+
     @ManyToOne
     @JoinColumn(name = "id_address", referencedColumnName = "id")
     private Address address;

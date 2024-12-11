@@ -18,4 +18,5 @@ public class CreateSupplier {
     public String serviceType;
     public String houseNumber;
     public String description;
+    public String ceremonialistEmail;
 }

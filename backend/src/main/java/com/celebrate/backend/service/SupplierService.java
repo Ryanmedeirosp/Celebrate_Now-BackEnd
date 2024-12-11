@@ -8,10 +8,12 @@ import org.springframework.stereotype.Service;
 import com.celebrate.backend.client.ViaCepClient;
 import com.celebrate.backend.client.response.CepResponse;
 import com.celebrate.backend.models.Address;
+import com.celebrate.backend.models.Ceremonialist;
 import com.celebrate.backend.models.Item;
 import com.celebrate.backend.models.Supplier;
 import com.celebrate.backend.models.Dto.CreateSupplier;
 import com.celebrate.backend.repository.AddressRepository;
+import com.celebrate.backend.repository.CeremonialistRepository;
 import com.celebrate.backend.repository.SupplierRepository;
 
 @Service
@@ -20,11 +22,13 @@ public class SupplierService {
     private final SupplierRepository supplierRepository;
     private final AddressRepository addressRepository;
     private final ViaCepClient viaCepClient;
+     private final CeremonialistRepository ceremonialistRepository;
 
-    public SupplierService(SupplierRepository supplierRepository, AddressRepository addressRepository, ViaCepClient viaCepClient) {
+    public SupplierService(SupplierRepository supplierRepository, AddressRepository addressRepository, ViaCepClient viaCepClient, CeremonialistRepository ceremonialistRepository) {
         this.supplierRepository = supplierRepository;
         this.addressRepository = addressRepository;
         this.viaCepClient = viaCepClient;
+        this.ceremonialistRepository = ceremonialistRepository;
     }
 
     public void createSupplier(CreateSupplier request) {
@@ -42,12 +46,16 @@ public class SupplierService {
     private Supplier addDataToSupplier(CreateSupplier request) {
         Supplier supplier = new Supplier();
 
+        Ceremonialist ceremonialist = ceremonialistRepository.findByEmail(request.getCeremonialistEmail())
+        .orElseThrow(()-> new RuntimeException());
+
         supplier.setName(request.getName());
         supplier.setEmail(request.getEmail());
         supplier.setCnpj(request.getCnpj());
         supplier.setPhone(request.getPhone());
         supplier.setServiceType(request.getServiceType());
         supplier.setDescription(request.getDescription());
+        supplier.setCeremonialist(ceremonialist);
 
         return supplier;
     }
