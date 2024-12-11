@@ -19,6 +19,9 @@ public class Item {
     @Column(name = "price", nullable = false, precision = 10, scale = 2)
     private BigDecimal price;
 
+    @Column(name = "title", nullable = false, length = 50)
+    private String title;
+
     @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
 

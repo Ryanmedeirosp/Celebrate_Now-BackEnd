@@ -45,6 +45,7 @@ CREATE TABLE supplier(
 CREATE TABLE item(
     id SERIAL PRIMARY KEY NOT NULL,
     price DECIMAL(10,2) NOT NULL,
+    title VARCHAR(50) NOT NULL,
     description TEXT NOT NULL,  
     id_supplier INTEGER REFERENCES supplier(id)
 );

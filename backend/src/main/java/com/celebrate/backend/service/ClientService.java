@@ -35,14 +35,14 @@ public class ClientService {
 
     public void createClient(CreateClient request){
 
+        Ceremonialist ceremonialist = ceremonialistRepository.findByEmail(request.getCeremonialistEmail())
+        .orElseThrow(() -> new RuntimeException("Ceremonialista não encontrado"));
+
         List<Budget> budget = new ArrayList<>();
 
         Address address = getAddressByCep(request);
 
         Client client = addDataToClient(request);
-
-        Ceremonialist ceremonialist = ceremonialistRepository.findByEmail(request.getCeremonialistEmail())
-        .orElseThrow(() -> new RuntimeException("Ceremonialista não encontrado"));
 
         client.setCeremonialist(ceremonialist);
         client.setBudget(budget);
