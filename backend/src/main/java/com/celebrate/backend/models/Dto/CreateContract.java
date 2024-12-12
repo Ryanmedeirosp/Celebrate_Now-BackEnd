@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateContract {
     
-    String clientEmail;
-    String pdf;
+    public Integer idBudget;
+    public String pdf;
 }

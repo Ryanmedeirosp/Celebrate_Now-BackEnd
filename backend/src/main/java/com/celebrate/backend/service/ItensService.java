@@ -26,10 +26,11 @@ public class ItensService {
 
     public void createItem(CreateItem request){
 
-        budgetRepository.findById(request.getBudgetId())
+        Budget budget = budgetRepository.findById(request.getBudgetId())
             .orElseThrow(() -> new RuntimeException("Não encontrado"));
 
         Item item = new Item();
+        item.setBudget(budget);
         item.setTitle(request.getTitle());
         item.setDescription(request.getDescription());
         item.setPrice(request.getPrice());

@@ -23,13 +23,12 @@ public class BudgetService {
     private final BudgetRepository budgetRepository;
     private final ClientRepository clientRepository;
     private final SupplierRepository supplierRepository;
-    private final ItensRepository itensRepository;
 
-    public BudgetService(BudgetRepository budgetRepository, ClientRepository clientRepository, ItensRepository itensRepository, SupplierRepository supplierRepository){
+    public BudgetService(BudgetRepository budgetRepository, ClientRepository clientRepository, SupplierRepository supplierRepository){
 
         this.budgetRepository = budgetRepository;
         this.clientRepository = clientRepository;
-        this.itensRepository = itensRepository;
+   
         this.supplierRepository = supplierRepository;
     }
 
@@ -43,7 +42,7 @@ public class BudgetService {
         Supplier supplier = supplierRepository.findByCnpj(request.getSupplierCnpj())
             .orElseThrow(() -> new RuntimeException("Cnpj não encontrado"));
 
-        List<Item> items = new ArrayList<>();
+        
 
         //Discutir isso aqui também.
         Contract contract = null;
@@ -51,7 +50,6 @@ public class BudgetService {
         budget.setBuget_date(LocalDate.now());
         budget.setClient(client);
         budget.setSupplier(supplier);
-        budget.setItems(items);
         budget.setContract(contract);
 
         budgetRepository.save(budget);

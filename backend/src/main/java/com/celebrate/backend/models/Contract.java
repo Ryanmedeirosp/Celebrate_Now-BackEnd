@@ -1,5 +1,7 @@
 package com.celebrate.backend.models;
 
+import java.util.UUID;
+
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +20,7 @@ public class Contract {
     private String pdf;
 
     @Column(name="contract_number", nullable = false)
-    private Integer contract_number;
+    private UUID contract_number;
 
     @OneToOne
     @JoinColumn(name = "id_budget", referencedColumnName = "id")

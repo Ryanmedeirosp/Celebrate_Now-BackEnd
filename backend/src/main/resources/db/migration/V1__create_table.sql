@@ -43,25 +43,25 @@ CREATE TABLE supplier(
     id_address INTEGER REFERENCES address(id)
 );
 
-CREATE TABLE item(
-    id SERIAL PRIMARY KEY NOT NULL,
-    price DECIMAL(10,2) NOT NULL,
-    title VARCHAR(50) NOT NULL,
-    description TEXT NOT NULL
-    -- id_budget INTEGER REFERENCES budget(id)
-);
-
 CREATE TABLE budget(
     id SERIAL PRIMARY KEY NOT NULL,
     buget_date DATE NOT NULL,
     id_supplier INTEGER REFERENCES supplier(id),
-    id_client INTEGER REFERENCES client(id),
-    id_itens INTEGER REFERENCES item(id)
+    id_client INTEGER REFERENCES client(id)
+    
+);
+
+CREATE TABLE item(
+    id SERIAL PRIMARY KEY NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    title VARCHAR(50) NOT NULL,
+    description TEXT NOT NULL,
+    id_budget INTEGER REFERENCES budget(id)
 );
 
 CREATE TABLE contract(
     id SERIAL PRIMARY KEY NOT NULL,
-    contract_number INTEGER NOT NULL,
+    contract_number UUID NOT NULL,
     pdf TEXT NOT NULL,
     id_budget INTEGER REFERENCES budget(id)
 );

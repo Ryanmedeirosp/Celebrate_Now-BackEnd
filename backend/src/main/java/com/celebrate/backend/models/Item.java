@@ -29,7 +29,7 @@ public class Item {
 
     @ManyToOne
     @JsonIgnore
-    // @JoinColumn(name = "id_budget", referencedColumnName = "id")
+    @JoinColumn(name = "id_budget", referencedColumnName = "id")
     private Budget budget;
 
     public Item(BigDecimal price, String description, Supplier supplier) {

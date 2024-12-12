@@ -1,50 +1,40 @@
 package com.celebrate.backend.service;
-
-import java.util.Random;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
-
-import com.celebrate.backend.models.Client;
+import com.celebrate.backend.models.Budget;
 import com.celebrate.backend.models.Contract;
 import com.celebrate.backend.models.Dto.CreateContract;
-import com.celebrate.backend.repository.ClientRepository;
+import com.celebrate.backend.repository.BudgetRepository;
 import com.celebrate.backend.repository.ContractRepository;
 
 @Service
 public class ContractService {
     
     private final ContractRepository contractRepository;
-    private final ClientRepository clientRepository;
+    private final BudgetRepository budgetRepository;
 
-    public ContractService(ContractRepository contractRepository, ClientRepository clientRepository){
+    public ContractService(ContractRepository contractRepository,  BudgetRepository budgetRepository) {
 
         this.contractRepository = contractRepository;
-        this.clientRepository = clientRepository;
+        this.budgetRepository = budgetRepository;
     }
 
     public void createContract(CreateContract request){
 
         Contract contract = new Contract();
-
-        Client client = clientRepository.findByEmail(request.getClientEmail())
-            .orElseThrow(() -> new RuntimeException("Cliente não encontrado."));
+        
+        Budget budget = budgetRepository.findById(request.getIdBudget()).orElseThrow(()-> new RuntimeException("Orçamento não encontrado"));
 
         contract.setPdf(request.getPdf());
 
-        //Conversar sobre uma forma de identificar o orçamento a que o contrato se refere.
-        contract.setBudget(client.getBudget().get(0));
+       
+        contract.setBudget(budget);
 
-        contract.setContract_number(generateRandomNumber());
+        contract.setContract_number(UUID.randomUUID());
 
         contractRepository.save(contract);
     }
 
-    public Integer generateRandomNumber(){
 
-        Random random = new Random();
-
-        Integer number = random.nextInt(1000000) + 1;
-
-        return number;
-    }
 }
