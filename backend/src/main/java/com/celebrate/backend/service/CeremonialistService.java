@@ -26,13 +26,6 @@ public class CeremonialistService {
         this.viaCepClient = viaCepClient;
     }
 
-    public List<Ceremonialist> getAllCeremonialists() {
-        return ceremonialistRepository.findAll();
-    }
-
-    public Ceremonialist getCeremonialistById(Integer id) {
-        return ceremonialistRepository.findById(id).orElse(null);
-    }
 
     public void createCeremonialist(CreateCeremonialist request){
 
@@ -53,7 +46,13 @@ public class CeremonialistService {
 
     private Ceremonialist addDataToCeremonialist(CreateCeremonialist request){
 
+
+
         Ceremonialist ceremonialist = new Ceremonialist();
+        
+        if(ceremonialistRepository.findByEmail(request.getEmail()).isPresent()){
+            throw new RuntimeException("Email já cadastrado");
+        };
 
         ceremonialist.setName(request.getName());
         ceremonialist.setEmail(request.getEmail());

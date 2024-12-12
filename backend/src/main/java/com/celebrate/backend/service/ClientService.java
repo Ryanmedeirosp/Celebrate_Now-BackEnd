@@ -12,6 +12,7 @@ import com.celebrate.backend.models.Budget;
 import com.celebrate.backend.models.Ceremonialist;
 import com.celebrate.backend.models.Client;
 import com.celebrate.backend.models.Dto.CreateClient;
+import com.celebrate.backend.models.Dto.GetClients;
 import com.celebrate.backend.repository.AddressRepository;
 import com.celebrate.backend.repository.CeremonialistRepository;
 import com.celebrate.backend.repository.ClientRepository;
@@ -31,6 +32,15 @@ public class ClientService {
         this.ceremonialistRepository = ceremonialistRepository;
         this.addressRepository = addressRepository;
         this.viaCepClient = viaCepClient;
+    }
+
+    public List<GetClients> getAllClients(Integer idCeremonialist) {
+        List<Client> clients = clientRepository.findAllByCeremonialistId(idCeremonialist);
+        List<GetClients> response = new ArrayList<>();
+        for (Client client : clients) {
+            response.add(new GetClients(client.getName(), client.getEmail(), client.getPhone()));
+        }
+        return response;
     }
 
     public void createClient(CreateClient request){

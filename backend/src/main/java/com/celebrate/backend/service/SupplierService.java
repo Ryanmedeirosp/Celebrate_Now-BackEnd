@@ -9,9 +9,12 @@ import com.celebrate.backend.client.ViaCepClient;
 import com.celebrate.backend.client.response.CepResponse;
 import com.celebrate.backend.models.Address;
 import com.celebrate.backend.models.Ceremonialist;
+import com.celebrate.backend.models.Client;
 import com.celebrate.backend.models.Item;
 import com.celebrate.backend.models.Supplier;
 import com.celebrate.backend.models.Dto.CreateSupplier;
+import com.celebrate.backend.models.Dto.GetClients;
+import com.celebrate.backend.models.Dto.GetSupplier;
 import com.celebrate.backend.repository.AddressRepository;
 import com.celebrate.backend.repository.CeremonialistRepository;
 import com.celebrate.backend.repository.SupplierRepository;
@@ -29,6 +32,15 @@ public class SupplierService {
         this.addressRepository = addressRepository;
         this.viaCepClient = viaCepClient;
         this.ceremonialistRepository = ceremonialistRepository;
+    }
+
+     public List<GetSupplier> getAllSupplier(Integer idCeremonialist) {
+        List<Supplier> suppliers = supplierRepository.findAllByCeremonialistId(idCeremonialist);
+        List<GetSupplier> response = new ArrayList<>();
+        for (Supplier supplier : suppliers) {
+            response.add(new GetSupplier(supplier.getName(), supplier.getEmail(), supplier.getPhone()));
+        }
+        return response;
     }
 
     public void createSupplier(CreateSupplier request) {
