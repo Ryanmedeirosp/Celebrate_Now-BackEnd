@@ -33,6 +33,20 @@ public class ClientService {
         this.viaCepClient = viaCepClient;
     }
 
+    public void updateClientByEmail(String email, CreateClient request){
+
+        Client client = clientRepository.findByEmail(email)
+            .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+
+        Address address = getAddressByCep(request);
+
+        client.setAddress(address);
+
+        updateClientData(client, request);
+        
+        clientRepository.save(client);
+    }
+
     public void createClient(CreateClient request){
 
         Ceremonialist ceremonialist = ceremonialistRepository.findByEmail(request.getCeremonialistEmail())
@@ -51,7 +65,7 @@ public class ClientService {
         clientRepository.save(client);
     }
 
-    public Client addDataToClient(CreateClient request){
+    private Client addDataToClient(CreateClient request){
 
         Client client = new Client();
 
@@ -63,6 +77,16 @@ public class ClientService {
         client.setPhone(request.getPhone());
 
         return client;
+    }
+
+    private void updateClientData(Client client, CreateClient request){
+
+        client.setName(request.getName());
+        client.setEmail(request.getEmail());
+        client.setPassword(request.getPassword());
+        client.setCpf(request.getCpf());
+        client.setBirthday(request.getBirthday());
+        client.setPhone(request.getPhone());
     }
 
     private Address getAddressByCep(CreateClient request){

@@ -16,6 +16,7 @@ import com.celebrate.backend.repository.CeremonialistRepository;
 
 @Service
 public class CeremonialistService {
+
     private final CeremonialistRepository ceremonialistRepository;
     private final AddressRepository addressRepository;
     private final ViaCepClient viaCepClient;
@@ -32,6 +33,20 @@ public class CeremonialistService {
 
     public Ceremonialist getCeremonialistById(Integer id) {
         return ceremonialistRepository.findById(id).orElse(null);
+    }
+
+    public void updateCeremonialisByEmail(String ceremonialistEmail, CreateCeremonialist request){
+
+        Ceremonialist ceremonialist = ceremonialistRepository.findByEmail(ceremonialistEmail)
+            .orElseThrow(() -> new RuntimeException());
+
+        Address address = getAddressByCep(request);
+
+        ceremonialist.setAddress(address);
+
+        updateCeremonialistData(ceremonialist, request);
+
+        ceremonialistRepository.save(ceremonialist);
     }
 
     public void createCeremonialist(CreateCeremonialist request){
@@ -63,6 +78,16 @@ public class CeremonialistService {
         ceremonialist.setPhone(request.getPhone());
 
         return ceremonialist;
+    }
+
+    private void updateCeremonialistData(Ceremonialist ceremonialist, CreateCeremonialist request){
+
+        ceremonialist.setName(request.getName());
+        ceremonialist.setEmail(request.getEmail());
+        ceremonialist.setPassword(request.getPassword());
+        ceremonialist.setDocument(request.getDocument());
+        ceremonialist.setBirthday(request.getBirthday());
+        ceremonialist.setPhone(request.getPhone());
     }
 
     private Address getAddressByCep(CreateCeremonialist request){

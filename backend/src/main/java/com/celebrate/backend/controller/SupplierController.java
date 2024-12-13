@@ -1,7 +1,9 @@
 package com.celebrate.backend.controller;
 
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +22,13 @@ public class SupplierController {
 
     @PostMapping()
     public void createSupplier(@RequestBody CreateSupplier supplier) {
-         supplierService.createSupplier(supplier);
-        }
+        
+        supplierService.createSupplier(supplier);
+    }
+
+    @PutMapping("/{email}")
+    public void updateCeremonialisByEmail(@PathVariable String email, @RequestBody CreateSupplier request){
+
+        supplierService.createSupplier(request);
+    }
 }

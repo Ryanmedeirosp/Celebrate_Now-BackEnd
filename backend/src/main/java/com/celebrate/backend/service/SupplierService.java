@@ -1,15 +1,11 @@
 package com.celebrate.backend.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 
 import com.celebrate.backend.client.ViaCepClient;
 import com.celebrate.backend.client.response.CepResponse;
 import com.celebrate.backend.models.Address;
 import com.celebrate.backend.models.Ceremonialist;
-import com.celebrate.backend.models.Item;
 import com.celebrate.backend.models.Supplier;
 import com.celebrate.backend.models.Dto.CreateSupplier;
 import com.celebrate.backend.repository.AddressRepository;
@@ -35,10 +31,21 @@ public class SupplierService {
         Address address = getAddressByCep(request);
         Supplier supplier = addDataToSupplier(request);
 
-       
-
         supplier.setAddress(address);
         
+        supplierRepository.save(supplier);
+    }
+
+    public void updateSupplierByCnpj(String cnpj, CreateSupplier request){
+
+        Supplier supplier = supplierRepository.findByCnpj(request.getCnpj())
+            .orElseThrow(()-> new RuntimeException());
+
+        Address address = getAddressByCep(request);
+
+        supplier.setAddress(address);
+
+        updateSupplierData(supplier, request);
 
         supplierRepository.save(supplier);
     }
@@ -58,6 +65,16 @@ public class SupplierService {
         supplier.setCeremonialist(ceremonialist);
 
         return supplier;
+    }
+
+    private void updateSupplierData(Supplier supplier, CreateSupplier request){
+
+        supplier.setName(request.getName());
+        supplier.setEmail(request.getEmail());
+        supplier.setCnpj(request.getCnpj());
+        supplier.setPhone(request.getPhone());
+        supplier.setServiceType(request.getServiceType());
+        supplier.setDescription(request.getDescription());
     }
 
     private Address getAddressByCep(CreateSupplier request) {

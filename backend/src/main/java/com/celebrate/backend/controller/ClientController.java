@@ -1,6 +1,8 @@
 package com.celebrate.backend.controller;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +22,12 @@ public class ClientController {
     @PostMapping()
     public void createClient(@RequestBody CreateClient request){
 
-        System.out.println(request);
         clientService.createClient(request);
+    }
+
+    @PutMapping("/{email}")
+    public void updateClientByEmail(@PathVariable String email, @RequestBody CreateClient request){
+
+        clientService.updateClientByEmail(email, request);
     }
 }
