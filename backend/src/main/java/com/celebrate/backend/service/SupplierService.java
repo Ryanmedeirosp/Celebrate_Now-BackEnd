@@ -1,17 +1,17 @@
 package com.celebrate.backend.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.celebrate.backend.client.ViaCepClient;
 import com.celebrate.backend.client.response.CepResponse;
 import com.celebrate.backend.models.Address;
 import com.celebrate.backend.models.Ceremonialist;
-import com.celebrate.backend.models.Client;
-import com.celebrate.backend.models.Item;
 import com.celebrate.backend.models.Supplier;
-import com.celebrate.backend.models.Dto.CreateSupplier;
-import com.celebrate.backend.models.Dto.GetClients;
-import com.celebrate.backend.models.Dto.GetSupplier;
+import com.celebrate.backend.models.dto.CreateSupplier;
+import com.celebrate.backend.models.dto.GetSupplier;
 import com.celebrate.backend.repository.AddressRepository;
 import com.celebrate.backend.repository.CeremonialistRepository;
 import com.celebrate.backend.repository.SupplierRepository;

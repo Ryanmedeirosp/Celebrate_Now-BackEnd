@@ -1,4 +1,4 @@
-package com.celebrate.backend.models.Dto;
+package com.celebrate.backend.models.dto;
 
 import lombok.Data;
 

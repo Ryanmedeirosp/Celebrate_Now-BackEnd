@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 import com.celebrate.backend.models.Budget;
 import com.celebrate.backend.models.Client;
 import com.celebrate.backend.models.Contract;
-import com.celebrate.backend.models.Item;
 import com.celebrate.backend.models.Supplier;
-import com.celebrate.backend.models.Dto.CreateBudget;
+import com.celebrate.backend.models.dto.CreateBudget;
+import com.celebrate.backend.models.dto.GetBudget;
+import com.celebrate.backend.models.dto.GetSupplier;
 import com.celebrate.backend.repository.BudgetRepository;
 import com.celebrate.backend.repository.ClientRepository;
-import com.celebrate.backend.repository.ItensRepository;
 import com.celebrate.backend.repository.SupplierRepository;
 
 @Service
@@ -57,4 +57,13 @@ public class BudgetService {
 
         return budget;
     }   
+
+    public List<GetBudget> getBudgets(Integer clientId){
+        List<Budget> budgets = budgetRepository.findAllByClientId(clientId);
+        List<GetBudget> response = new ArrayList<>();
+        for (Budget budget : budgets) {
+            response.add(new GetBudget(budget.getSupplier().getName(), budget.getClient().getName(), budget.getBuget_date(), budget.getItems(), budget.getContract()));
+        }
+        return response; 
+    }
 }

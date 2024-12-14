@@ -4,7 +4,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import com.celebrate.backend.models.Budget;
 import com.celebrate.backend.models.Contract;
-import com.celebrate.backend.models.Dto.CreateContract;
+import com.celebrate.backend.models.dto.CreateContract;
 import com.celebrate.backend.repository.BudgetRepository;
 import com.celebrate.backend.repository.ContractRepository;
 

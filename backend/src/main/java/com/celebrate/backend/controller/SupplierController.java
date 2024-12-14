@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.celebrate.backend.models.Dto.CreateSupplier;
-import com.celebrate.backend.models.Dto.GetSupplier;
+import com.celebrate.backend.models.dto.CreateSupplier;
+import com.celebrate.backend.models.dto.GetSupplier;
 import com.celebrate.backend.service.SupplierService;
 
 
@@ -29,6 +29,11 @@ public class SupplierController {
     public void createSupplier(@RequestBody CreateSupplier supplier) {
         
         supplierService.createSupplier(supplier);
+    }
+
+    @GetMapping("{idCeremonialist}")
+    public List<GetSupplier> getAllSuppliers(@PathVariable Integer idCeremonialist) {
+        return supplierService.getAllSupplier(idCeremonialist);
     }
 
     @PutMapping("/{email}")

@@ -10,7 +10,7 @@ import com.celebrate.backend.client.response.CepResponse;
 import com.celebrate.backend.models.Address;
 import com.celebrate.backend.models.Ceremonialist;
 import com.celebrate.backend.models.Client;
-import com.celebrate.backend.models.Dto.CreateCeremonialist;
+import com.celebrate.backend.models.dto.CreateCeremonialist;
 import com.celebrate.backend.repository.AddressRepository;
 import com.celebrate.backend.repository.CeremonialistRepository;
 

@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.celebrate.backend.models.Client;
-import com.celebrate.backend.models.Dto.CreateClient;
-import com.celebrate.backend.models.Dto.GetClients;
+import com.celebrate.backend.models.dto.CreateClient;
+import com.celebrate.backend.models.dto.GetClients;
 import com.celebrate.backend.service.ClientService;
 
 import lombok.RequiredArgsConstructor;
@@ -29,6 +29,11 @@ public class ClientController {
     public void createClient(@RequestBody CreateClient request){
 
         clientService.createClient(request);
+    }
+    
+    @GetMapping("{idCeremonialist}")
+    public List<GetClients> getAllClients(@PathVariable Integer idCeremonialist){
+        return clientService.getAllClients(idCeremonialist);
     }
 
     @PutMapping("/{email}")

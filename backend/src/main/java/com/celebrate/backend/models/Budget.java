@@ -23,7 +23,6 @@ public class Budget {
     @ManyToOne
     @JoinColumn(name = "id_client", referencedColumnName = "id")
     private Client client;
-
     
     @ManyToOne
     @JoinColumn(name = "id_supplier", referencedColumnName = "id")

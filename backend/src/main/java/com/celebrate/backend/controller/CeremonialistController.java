@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.celebrate.backend.models.Dto.CreateCeremonialist;
+import com.celebrate.backend.models.dto.CreateCeremonialist;
 import com.celebrate.backend.service.CeremonialistService;
 
 import lombok.RequiredArgsConstructor;

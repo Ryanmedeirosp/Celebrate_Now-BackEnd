@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.celebrate.backend.models.Dto.CreateBudget;
+import com.celebrate.backend.models.dto.CreateBudget;
 import com.celebrate.backend.service.BudgetService;
 
 
