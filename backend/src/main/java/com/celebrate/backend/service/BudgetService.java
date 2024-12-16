@@ -12,7 +12,6 @@ import com.celebrate.backend.models.Contract;
 import com.celebrate.backend.models.Supplier;
 import com.celebrate.backend.models.dto.CreateBudget;
 import com.celebrate.backend.models.dto.GetBudget;
-import com.celebrate.backend.models.dto.GetSupplier;
 import com.celebrate.backend.repository.BudgetRepository;
 import com.celebrate.backend.repository.ClientRepository;
 import com.celebrate.backend.repository.SupplierRepository;
@@ -42,9 +41,7 @@ public class BudgetService {
 
         Supplier supplier = supplierRepository.findByCnpj(request.getSupplierCnpj())
             .orElseThrow(() -> new RuntimeException("Cnpj não encontrado"));
-
-        
-
+            
         //Discutir isso aqui também.
         Contract contract = null;
 

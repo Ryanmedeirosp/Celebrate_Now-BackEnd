@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,9 +35,9 @@ public class SupplierController {
         return supplierService.getAllSupplier(idCeremonialist);
     }
 
-    @PutMapping("/{email}")
-    public void updateCeremonialisByEmail(@PathVariable String email, @RequestBody CreateSupplier request){
+    @PutMapping("/{ceremonialistId}")
+    public void updateCeremonialisByEmail(@PathVariable Integer ceremonialistId, @RequestBody CreateSupplier request){
 
-        supplierService.createSupplier(request);
+        supplierService.updateSupplierById(ceremonialistId, request);
     }
 }

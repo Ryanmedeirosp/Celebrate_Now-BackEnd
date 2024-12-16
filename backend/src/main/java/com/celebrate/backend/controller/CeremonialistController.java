@@ -25,9 +25,9 @@ public class CeremonialistController {
         ceremonialistService.createCeremonialist(request);
     }
 
-    @PutMapping("/{email}")
-    public void updateCeremonialisByEmail(@PathVariable String email, @RequestBody CreateCeremonialist request){
+    @PutMapping("/{ceremonialistId}")
+    public void updateCeremonialisByEmail(@PathVariable Integer ceremonialistId, @RequestBody CreateCeremonialist request){
 
-        ceremonialistService.updateCeremonialisByEmail(email, request);
+        ceremonialistService.updateCeremonialisById(ceremonialistId, request);
     }
 }

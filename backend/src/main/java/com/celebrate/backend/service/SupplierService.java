@@ -49,14 +49,10 @@ public class SupplierService {
         supplierRepository.save(supplier);
     }
 
-    public void updateSupplierByCnpj(String cnpj, CreateSupplier request){
+    public void updateSupplierById(Integer ceremonialistId, CreateSupplier request){
 
-        Supplier supplier = supplierRepository.findByCnpj(request.getCnpj())
+        Supplier supplier = supplierRepository.findById(ceremonialistId)
             .orElseThrow(()-> new RuntimeException());
-
-        Address address = getAddressByCep(request);
-
-        supplier.setAddress(address);
 
         updateSupplierData(supplier, request);
 
@@ -88,6 +84,10 @@ public class SupplierService {
         supplier.setPhone(request.getPhone());
         supplier.setServiceType(request.getServiceType());
         supplier.setDescription(request.getDescription());
+
+        Address address = supplier.getAddress();
+
+        updateAddress(address, request);
     }
 
     private Address getAddressByCep(CreateSupplier request) {
@@ -106,5 +106,19 @@ public class SupplierService {
         addressRepository.save(address);
 
         return address;
+    }
+
+    private void updateAddress(Address address, CreateSupplier request){
+
+        CepResponse cepResponse = viaCepClient.getAddressByCep(request.getCep());
+
+        address.setCep(request.getCep());
+        address.setState(cepResponse.getEstado());
+        address.setCity(cepResponse.getLocalidade());
+        address.setDistrict(cepResponse.getBairro());
+        address.setStreet(cepResponse.getLogradouro());
+        address.setHouseNumber(request.getHouseNumber());
+
+        addressRepository.save(address);
     }
 }

@@ -34,20 +34,6 @@ public class ClientService {
         this.viaCepClient = viaCepClient;
     }
 
-    public void updateClientByEmail(String email, CreateClient request){
-
-        Client client = clientRepository.findByEmail(email)
-            .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
-
-        Address address = getAddressByCep(request);
-
-        client.setAddress(address);
-
-        updateClientData(client, request);
-        
-        clientRepository.save(client);
-    }
-
     public List<GetClients> getAllClients(Integer idCeremonialist) {
         List<Client> clients = clientRepository.findAllByCeremonialistId(idCeremonialist);
         List<GetClients> response = new ArrayList<>();
@@ -75,6 +61,16 @@ public class ClientService {
         clientRepository.save(client);
     }
 
+    public void updateClientById(Integer clientId, CreateClient request){
+
+        Client client = clientRepository.findById(clientId)
+            .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+
+        updateClientData(client, request);
+        
+        clientRepository.save(client);
+    }
+
     private Client addDataToClient(CreateClient request){
 
         Client client = new Client();
@@ -97,6 +93,10 @@ public class ClientService {
         client.setCpf(request.getCpf());
         client.setBirthday(request.getBirthday());
         client.setPhone(request.getPhone());
+
+        Address address = client.getAddress();
+
+        updateAddress(address, request);
     }
 
     private Address getAddressByCep(CreateClient request){
@@ -117,5 +117,17 @@ public class ClientService {
         return address;
     }
 
+    private void updateAddress(Address address, CreateClient request){
 
+        CepResponse cepResponse = viaCepClient.getAddressByCep(request.getCep());
+
+        address.setCep(request.getCep());
+        address.setState(cepResponse.getEstado());
+        address.setCity(cepResponse.getLocalidade());
+        address.setDistrict(cepResponse.getBairro());
+        address.setStreet(cepResponse.getLogradouro());
+        address.setHouseNumber(request.getHouseNumber());
+
+        addressRepository.save(address);
+    }
 }

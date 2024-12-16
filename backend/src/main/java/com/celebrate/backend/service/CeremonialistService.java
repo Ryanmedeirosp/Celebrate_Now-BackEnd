@@ -27,21 +27,6 @@ public class CeremonialistService {
         this.viaCepClient = viaCepClient;
     }
 
-
-    public void updateCeremonialisByEmail(String ceremonialistEmail, CreateCeremonialist request){
-
-        Ceremonialist ceremonialist = ceremonialistRepository.findByEmail(ceremonialistEmail)
-            .orElseThrow(() -> new RuntimeException());
-
-        Address address = getAddressByCep(request);
-
-        ceremonialist.setAddress(address);
-
-        updateCeremonialistData(ceremonialist, request);
-
-        ceremonialistRepository.save(ceremonialist);
-    }
-
     public void createCeremonialist(CreateCeremonialist request){
 
         //Criação do Endereço
@@ -59,9 +44,19 @@ public class CeremonialistService {
         ceremonialistRepository.save(ceremonialist);
     }
 
+    public void updateCeremonialisById(Integer ceremonialistId, CreateCeremonialist request){
+
+        Ceremonialist ceremonialist = ceremonialistRepository.findById(ceremonialistId)
+            .orElseThrow(() -> new RuntimeException());
+
+        updateCeremonialistData(ceremonialist, request);
+
+        ceremonialistRepository.save(ceremonialist);
+    }
+
+    //Funções de Auxílio
+
     private Ceremonialist addDataToCeremonialist(CreateCeremonialist request){
-
-
 
         Ceremonialist ceremonialist = new Ceremonialist();
         
@@ -87,6 +82,10 @@ public class CeremonialistService {
         ceremonialist.setDocument(request.getDocument());
         ceremonialist.setBirthday(request.getBirthday());
         ceremonialist.setPhone(request.getPhone());
+
+        Address address = ceremonialist.getAddress();
+
+        updateAddress(address, request);
     }
 
     private Address getAddressByCep(CreateCeremonialist request){
@@ -105,5 +104,19 @@ public class CeremonialistService {
         addressRepository.save(address);
 
         return address;
+    }
+
+    private void updateAddress(Address address, CreateCeremonialist request){
+
+        CepResponse cepResponse = viaCepClient.getAddressByCep(request.getCep());
+
+        address.setCep(request.getCep());
+        address.setState(cepResponse.getEstado());
+        address.setCity(cepResponse.getLocalidade());
+        address.setDistrict(cepResponse.getBairro());
+        address.setStreet(cepResponse.getLogradouro());
+        address.setHouseNumber(request.getHouseNumber());
+
+        addressRepository.save(address);
     }
 }
