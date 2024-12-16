@@ -10,5 +10,5 @@ import com.celebrate.backend.models.Contract;
 @Repository
 public interface ContractRepository extends JpaRepository<Contract, Integer>{
 
-    List<Contract> findAllByBudgetId(Integer idClient);
+    List<Contract> findAllByBudgetId(Integer idBudget);
 } 
