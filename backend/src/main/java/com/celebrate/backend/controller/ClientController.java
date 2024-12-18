@@ -35,7 +35,7 @@ public class ClientController {
     }
 
     @PutMapping("/{clientId}")
-    public void updateClientByEmail(@PathVariable Integer clientId, @RequestBody CreateClient request){
+    public void updateClientById(@PathVariable Integer clientId, @RequestBody CreateClient request){
 
         clientService.updateClientById(clientId, request);
     }

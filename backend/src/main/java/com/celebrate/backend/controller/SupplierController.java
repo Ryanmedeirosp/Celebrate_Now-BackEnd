@@ -36,7 +36,7 @@ public class SupplierController {
     }
 
     @PutMapping("/{ceremonialistId}")
-    public void updateCeremonialisByEmail(@PathVariable Integer ceremonialistId, @RequestBody CreateSupplier request){
+    public void updateCeremonialisById(@PathVariable Integer ceremonialistId, @RequestBody CreateSupplier request){
 
         supplierService.updateSupplierById(ceremonialistId, request);
     }
