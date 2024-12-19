@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.celebrate.backend.models.dto.AddItemsToBudget;
 import com.celebrate.backend.models.dto.CreateBudget;
 import com.celebrate.backend.models.dto.GetBudget;
 import com.celebrate.backend.service.BudgetService;
@@ -32,5 +33,11 @@ public class BudgetController {
     @GetMapping({"{idClient}"})
     public List<GetBudget> getBudget(@PathVariable Integer idClient) {
         return budgetService.getBudgets(idClient);
-        }
+    }
+
+    @PostMapping("/addItems")
+    public void addItemsToBudget(@RequestBody AddItemsToBudget request){
+
+        budgetService.addItemsToBudget(request);
+    }
 }

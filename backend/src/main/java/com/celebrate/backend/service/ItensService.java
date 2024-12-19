@@ -48,11 +48,8 @@ public class ItensService {
         List<GetItem> response = new ArrayList<>();
         for (Item item : itens) {
           
-            response.add(new GetItem(item.getPrice(),item.getTitle(), item.getDescription(), item.getBudget().getSupplier().getName(), item.getBudget().getId()));
-            
-           
+            response.add(new GetItem(item.getPrice(),item.getTitle(), item.getDescription(), item.getBudget().getSupplier().getName(), item.getBudget().getId()));    
         }
         return response; 
     }
-
 }
