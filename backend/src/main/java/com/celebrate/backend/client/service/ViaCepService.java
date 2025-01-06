@@ -14,7 +14,6 @@ public class ViaCepService {
     private final ViaCepClient viaCepClient;
 
     public CepResponse getAddressByCep(String cep){
-
         return viaCepClient.getAddressByCep(cep);
     }
 }
