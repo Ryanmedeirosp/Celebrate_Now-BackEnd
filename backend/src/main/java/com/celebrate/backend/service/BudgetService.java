@@ -10,9 +10,7 @@ import org.springframework.stereotype.Service;
 import com.celebrate.backend.models.Budget;
 import com.celebrate.backend.models.Client;
 import com.celebrate.backend.models.Contract;
-import com.celebrate.backend.models.Item;
 import com.celebrate.backend.models.Supplier;
-import com.celebrate.backend.models.dto.AddItemsToBudget;
 import com.celebrate.backend.models.dto.CreateBudget;
 import com.celebrate.backend.models.dto.GetBudget;
 import com.celebrate.backend.repository.BudgetRepository;
@@ -26,14 +24,12 @@ public class BudgetService {
     private final BudgetRepository budgetRepository;
     private final ClientRepository clientRepository;
     private final SupplierRepository supplierRepository;
-    private final ItensRepository itensRepository;
 
     public BudgetService(BudgetRepository budgetRepository, ClientRepository clientRepository, SupplierRepository supplierRepository, ItensRepository itensRepository){
 
         this.budgetRepository = budgetRepository;
         this.clientRepository = clientRepository;
         this.supplierRepository = supplierRepository;
-        this.itensRepository = itensRepository;
     }
 
 
@@ -78,21 +74,5 @@ public class BudgetService {
            
         }
         return response; 
-    }
-
-    public void addItemsToBudget(AddItemsToBudget request){
-
-        Budget budget = budgetRepository.findById(request.getBudgetId())
-            .orElseThrow(() -> new RuntimeException("Orçamento não encontrado."));
-        List<Item> itensBudget = budget.getItems();
-        for(Integer id : request.getItemsId()){
-
-            Item item = itensRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Item não encontrado."));
-
-            itensBudget.add(item);
-        }
-        budget.setItems(itensBudget);
-        budgetRepository.save(budget);
     }
 }
