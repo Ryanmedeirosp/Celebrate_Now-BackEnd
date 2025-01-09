@@ -1,5 +1,6 @@
 package com.celebrate.backend.service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.celebrate.backend.models.Budget;
 import com.celebrate.backend.models.Client;
 import com.celebrate.backend.models.Contract;
+import com.celebrate.backend.models.Item;
 import com.celebrate.backend.models.Supplier;
 import com.celebrate.backend.models.dto.CreateBudget;
 import com.celebrate.backend.models.dto.GetBudget;
@@ -56,23 +58,39 @@ public class BudgetService {
         return budget;
     }   
 
-    public List<GetBudget> getBudgets(Integer clientId){
+    public List<GetBudget> getBudgets(Integer clientId) {
         List<Budget> budgets = budgetRepository.findAllByClientId(clientId);
         List<GetBudget> response = new ArrayList<>();
+        
         for (Budget budget : budgets) {
-            if(budget.getContract().getContract_number() != null){
-
-                response.add(new GetBudget(budget.getSupplier().getName(), 
-                budget.getClient().getName(), budget.getBuget_date(), 
-                budget.getItems(), budget.getContract().getContract_number()));
-
-            }else{
-                response.add(new GetBudget(budget.getSupplier().getName(), 
-                budget.getClient().getName(), budget.getBuget_date(), 
-                budget.getItems(), UUID.fromString("0")));
+            
+             BigDecimal totalAmount = budget.getItems().stream()
+                                       .map(Item::getPrice) // Substitua "getPrice" pelo nome real do método que retorna o preço.
+                                       .reduce(BigDecimal.ZERO, BigDecimal::add);
+    
+            // Adicionar ao response com contrato válido ou UUID padrão
+            if (budget.getContract() != null && budget.getContract().getContract_number() != null) {
+                response.add(new GetBudget(
+                    budget.getSupplier().getName(),
+                    budget.getClient().getName(),
+                    budget.getBuget_date(),
+                    budget.getItems(),
+                    budget.getContract().getContract_number(),
+                    totalAmount
+                ));
+            } else {
+                response.add(new GetBudget(
+                    budget.getSupplier().getName(),
+                    budget.getClient().getName(),
+                    budget.getBuget_date(),
+                    budget.getItems(),
+                    UUID.fromString("0"),
+                    totalAmount
+                ));
             }
-           
         }
-        return response; 
+    
+        return response;
     }
+    
 }
