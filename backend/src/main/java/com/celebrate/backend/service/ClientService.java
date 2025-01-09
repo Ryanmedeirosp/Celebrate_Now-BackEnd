@@ -10,7 +10,6 @@ import com.celebrate.backend.client.ViaCepClient;
 import com.celebrate.backend.client.response.CepResponse;
 import com.celebrate.backend.exception.InvalidClientDataException;
 import com.celebrate.backend.models.Address;
-import com.celebrate.backend.models.Budget;
 import com.celebrate.backend.models.Ceremonialist;
 import com.celebrate.backend.models.Client;
 import com.celebrate.backend.models.dto.CreateClient;

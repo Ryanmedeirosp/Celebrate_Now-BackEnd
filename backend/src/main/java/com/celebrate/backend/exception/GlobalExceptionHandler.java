@@ -33,9 +33,9 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorDetails);
     }
 
-    // Handler para InvalidDataException
-    @ExceptionHandler(InvalidDataException.class)
-    public ResponseEntity<ErrorDetails> handleInvalidDataException(InvalidDataException e, WebRequest request) {
+    // Handler para EmailAlreadyExistsException
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    public ResponseEntity<ErrorDetails> handleEmailAlreadyExistsException(EmailAlreadyExistsException e, WebRequest request) {
         ErrorDetails errorDetails = new ErrorDetails(
             LocalDateTime.now(),
             e.getMessage(),

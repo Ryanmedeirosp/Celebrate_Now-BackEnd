@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.celebrate.backend.client.ViaCepClient;
 import com.celebrate.backend.client.response.CepResponse;
+import com.celebrate.backend.exception.EmailAlreadyExistsException;
 import com.celebrate.backend.models.Address;
 import com.celebrate.backend.models.Ceremonialist;
 import com.celebrate.backend.models.Client;
@@ -21,21 +22,21 @@ public class CeremonialistService {
     private final AddressRepository addressRepository;
     private final ViaCepClient viaCepClient;
 
-    public CeremonialistService(CeremonialistRepository ceremonialistRepository, AddressRepository addressRepository,ViaCepClient viaCepClient) {
+    public CeremonialistService(CeremonialistRepository ceremonialistRepository, AddressRepository addressRepository, ViaCepClient viaCepClient) {
         this.ceremonialistRepository = ceremonialistRepository;
         this.addressRepository = addressRepository;
         this.viaCepClient = viaCepClient;
     }
 
-    public void createCeremonialist(CreateCeremonialist request){
+    public void createCeremonialist(CreateCeremonialist request) {
 
-        //Criação do Endereço
+        // Criação do Endereço
         Address address = getAddressByCep(request);
 
-        //Criação da lista de Clientes
+        // Criação da lista de Clientes
         List<Client> clients = new ArrayList<>();
 
-        //Adição dos dados do Cerimonialista
+        // Adição dos dados do Cerimonialista
         Ceremonialist ceremonialist = addDataToCeremonialist(request);
 
         ceremonialist.setAddress(address);
@@ -44,26 +45,26 @@ public class CeremonialistService {
         ceremonialistRepository.save(ceremonialist);
     }
 
-    public void updateCeremonialisById(Integer ceremonialistId, CreateCeremonialist request){
+    public void updateCeremonialistById(Integer ceremonialistId, CreateCeremonialist request) {
 
         Ceremonialist ceremonialist = ceremonialistRepository.findById(ceremonialistId)
-            .orElseThrow(() -> new RuntimeException());
+            .orElseThrow(() -> new RuntimeException("Ceremonialista não encontrado"));
 
         updateCeremonialistData(ceremonialist, request);
 
         ceremonialistRepository.save(ceremonialist);
     }
 
-    //Funções de Auxílio
+    // Funções de Auxílio
 
-    private Ceremonialist addDataToCeremonialist(CreateCeremonialist request){
+    private Ceremonialist addDataToCeremonialist(CreateCeremonialist request) {
+
+        // Verificação de Email já cadastrado
+        if (ceremonialistRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new EmailAlreadyExistsException("Email já cadastrado.");
+        }
 
         Ceremonialist ceremonialist = new Ceremonialist();
-        
-        if(ceremonialistRepository.findByEmail(request.getEmail()).isPresent()){
-            throw new RuntimeException("Email já cadastrado");
-        };
-
         ceremonialist.setName(request.getName());
         ceremonialist.setEmail(request.getEmail());
         ceremonialist.setPassword(request.getPassword());
@@ -74,7 +75,7 @@ public class CeremonialistService {
         return ceremonialist;
     }
 
-    private void updateCeremonialistData(Ceremonialist ceremonialist, CreateCeremonialist request){
+    private void updateCeremonialistData(Ceremonialist ceremonialist, CreateCeremonialist request) {
 
         ceremonialist.setName(request.getName());
         ceremonialist.setEmail(request.getEmail());
@@ -84,16 +85,18 @@ public class CeremonialistService {
         ceremonialist.setPhone(request.getPhone());
 
         Address address = ceremonialist.getAddress();
-
         updateAddress(address, request);
     }
 
-    private Address getAddressByCep(CreateCeremonialist request){
+    private Address getAddressByCep(CreateCeremonialist request) {
 
         CepResponse cepResponse = viaCepClient.getAddressByCep(request.getCep());
         
-        Address address = new Address();
+        if (cepResponse == null) {
+            throw new RuntimeException("Endereço não encontrado para o CEP: " + request.getCep());
+        }
 
+        Address address = new Address();
         address.setCep(request.getCep());
         address.setState(cepResponse.getEstado());
         address.setCity(cepResponse.getLocalidade());
@@ -106,9 +109,17 @@ public class CeremonialistService {
         return address;
     }
 
-    private void updateAddress(Address address, CreateCeremonialist request){
+    private void updateAddress(Address address, CreateCeremonialist request) {
+
+        if (address == null) {
+            throw new RuntimeException("Endereço não encontrado para atualização.");
+        }
 
         CepResponse cepResponse = viaCepClient.getAddressByCep(request.getCep());
+
+        if (cepResponse == null) {
+            throw new RuntimeException("Endereço não encontrado para o CEP: " + request.getCep());
+        }
 
         address.setCep(request.getCep());
         address.setState(cepResponse.getEstado());

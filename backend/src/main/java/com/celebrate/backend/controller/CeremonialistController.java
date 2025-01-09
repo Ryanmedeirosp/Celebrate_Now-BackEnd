@@ -28,6 +28,6 @@ public class CeremonialistController {
     @PutMapping("/{ceremonialistId}")
     public void updateCeremonialisById(@PathVariable Integer ceremonialistId, @RequestBody CreateCeremonialist request){
 
-        ceremonialistService.updateCeremonialisById(ceremonialistId, request);
+        ceremonialistService.updateCeremonialistById(ceremonialistId, request);
     }
 }
