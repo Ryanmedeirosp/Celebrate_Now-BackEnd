@@ -33,6 +33,17 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorDetails);
     }
 
+    // Handler para InvalidDataException
+    @ExceptionHandler(InvalidDataException.class)
+    public ResponseEntity<ErrorDetails> handleInvalidDataException(InvalidDataException e, WebRequest request) {
+        ErrorDetails errorDetails = new ErrorDetails(
+            LocalDateTime.now(),
+            e.getMessage(),
+            request.getDescription(false)
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorDetails);
+    }
+
     // Handler genérico para RuntimeException
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorDetails> handleRuntimeException(RuntimeException ex, WebRequest request) {

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.celebrate.backend.client.ViaCepClient;
 import com.celebrate.backend.client.response.CepResponse;
+import com.celebrate.backend.exception.InvalidClientDataException;
+import com.celebrate.backend.exception.InvalidDataException;
 import com.celebrate.backend.models.Address;
 import com.celebrate.backend.models.Ceremonialist;
 import com.celebrate.backend.models.Supplier;
@@ -22,16 +24,19 @@ public class SupplierService {
     private final SupplierRepository supplierRepository;
     private final AddressRepository addressRepository;
     private final ViaCepClient viaCepClient;
-     private final CeremonialistRepository ceremonialistRepository;
+    private final CeremonialistRepository ceremonialistRepository;
 
-    public SupplierService(SupplierRepository supplierRepository, AddressRepository addressRepository, ViaCepClient viaCepClient, CeremonialistRepository ceremonialistRepository) {
+    public SupplierService(SupplierRepository supplierRepository, 
+                           AddressRepository addressRepository, 
+                           ViaCepClient viaCepClient, 
+                           CeremonialistRepository ceremonialistRepository) {
         this.supplierRepository = supplierRepository;
         this.addressRepository = addressRepository;
         this.viaCepClient = viaCepClient;
         this.ceremonialistRepository = ceremonialistRepository;
     }
 
-     public List<GetSupplier> getAllSupplier(Integer idCeremonialist) {
+    public List<GetSupplier> getAllSupplier(Integer idCeremonialist) {
         List<Supplier> suppliers = supplierRepository.findAllByCeremonialistId(idCeremonialist);
         List<GetSupplier> response = new ArrayList<>();
         for (Supplier supplier : suppliers) {
@@ -41,30 +46,14 @@ public class SupplierService {
     }
 
     public void createSupplier(CreateSupplier request) {
-        Address address = getAddressByCep(request);
-        Supplier supplier = addDataToSupplier(request);
-
-        supplier.setAddress(address);
-        
-        supplierRepository.save(supplier);
-    }
-
-    public void updateSupplierById(Integer ceremonialistId, CreateSupplier request){
-
-        Supplier supplier = supplierRepository.findById(ceremonialistId)
-            .orElseThrow(()-> new RuntimeException());
-
-        updateSupplierData(supplier, request);
-
-        supplierRepository.save(supplier);
-    }
-
-    private Supplier addDataToSupplier(CreateSupplier request) {
-        Supplier supplier = new Supplier();
+        validateSupplierData(request);
 
         Ceremonialist ceremonialist = ceremonialistRepository.findByEmail(request.getCeremonialistEmail())
-        .orElseThrow(()-> new RuntimeException());
+            .orElseThrow(() -> new InvalidClientDataException("Ceremonialista não encontrado"));
 
+        Address address = getAddressByCep(request);
+
+        Supplier supplier = new Supplier();
         supplier.setName(request.getName());
         supplier.setEmail(request.getEmail());
         supplier.setCnpj(request.getCnpj());
@@ -72,11 +61,16 @@ public class SupplierService {
         supplier.setServiceType(request.getServiceType());
         supplier.setDescription(request.getDescription());
         supplier.setCeremonialist(ceremonialist);
+        supplier.setAddress(address);
 
-        return supplier;
+        supplierRepository.save(supplier);
     }
 
-    private void updateSupplierData(Supplier supplier, CreateSupplier request){
+    public void updateSupplierById(Integer supplierId, CreateSupplier request) {
+        validateSupplierData(request);
+
+        Supplier supplier = supplierRepository.findById(supplierId)
+            .orElseThrow(() -> new InvalidDataException("Fornecedor não encontrado"));
 
         supplier.setName(request.getName());
         supplier.setEmail(request.getEmail());
@@ -85,17 +79,18 @@ public class SupplierService {
         supplier.setServiceType(request.getServiceType());
         supplier.setDescription(request.getDescription());
 
-        Address address = supplier.getAddress();
+        updateAddress(supplier.getAddress(), request);
 
-        updateAddress(address, request);
+        supplierRepository.save(supplier);
     }
 
     private Address getAddressByCep(CreateSupplier request) {
-        System.out.println(request.getCep());
         CepResponse cepResponse = viaCepClient.getAddressByCep(request.getCep());
+        if (cepResponse == null) {
+            throw new InvalidDataException("CEP inválido ou não encontrado.");
+        }
 
         Address address = new Address();
-
         address.setCep(request.getCep());
         address.setState(cepResponse.getEstado());
         address.setCity(cepResponse.getLocalidade());
@@ -103,14 +98,14 @@ public class SupplierService {
         address.setStreet(cepResponse.getLogradouro());
         address.setHouseNumber(request.getHouseNumber());
 
-        addressRepository.save(address);
-
-        return address;
+        return addressRepository.save(address);
     }
 
-    private void updateAddress(Address address, CreateSupplier request){
-
+    private void updateAddress(Address address, CreateSupplier request) {
         CepResponse cepResponse = viaCepClient.getAddressByCep(request.getCep());
+        if (cepResponse == null) {
+            throw new InvalidDataException("CEP inválido ou não encontrado.");
+        }
 
         address.setCep(request.getCep());
         address.setState(cepResponse.getEstado());
@@ -120,5 +115,20 @@ public class SupplierService {
         address.setHouseNumber(request.getHouseNumber());
 
         addressRepository.save(address);
+    }
+
+    private void validateSupplierData(CreateSupplier request) {
+        if (request.getName() == null || request.getName().isBlank()) {
+            throw new InvalidDataException("O nome do fornecedor é obrigatório.");
+        }
+        if (request.getEmail() == null || !request.getEmail().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+            throw new InvalidDataException("Email inválido.");
+        }
+        if (request.getCnpj() == null || request.getCnpj().length() != 14) {
+            throw new InvalidDataException("CNPJ inválido.");
+        }
+        if (request.getPhone() == null || !request.getPhone().matches("^\\+?[1-9][0-9]{1,14}$")) {
+            throw new InvalidDataException("Número de telefone inválido.");
+        }
     }
 }
