@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.celebrate.backend.client.ViaCepClient;
 import com.celebrate.backend.client.response.CepResponse;
 import com.celebrate.backend.exception.EmailAlreadyExistsException;
+import com.celebrate.backend.exception.InvalidDataException;
 import com.celebrate.backend.models.Address;
 import com.celebrate.backend.models.Ceremonialist;
 import com.celebrate.backend.models.Client;
@@ -22,13 +23,16 @@ public class CeremonialistService {
     private final AddressRepository addressRepository;
     private final ViaCepClient viaCepClient;
 
-    public CeremonialistService(CeremonialistRepository ceremonialistRepository, AddressRepository addressRepository, ViaCepClient viaCepClient) {
+    public CeremonialistService(CeremonialistRepository ceremonialistRepository, 
+                                AddressRepository addressRepository, 
+                                ViaCepClient viaCepClient) {
         this.ceremonialistRepository = ceremonialistRepository;
         this.addressRepository = addressRepository;
         this.viaCepClient = viaCepClient;
     }
 
     public void createCeremonialist(CreateCeremonialist request) {
+        validateCeremonialistData(request);
 
         // Criação do Endereço
         Address address = getAddressByCep(request);
@@ -46,9 +50,10 @@ public class CeremonialistService {
     }
 
     public void updateCeremonialistById(Integer ceremonialistId, CreateCeremonialist request) {
+        validateCeremonialistData(request);
 
         Ceremonialist ceremonialist = ceremonialistRepository.findById(ceremonialistId)
-            .orElseThrow(() -> new RuntimeException("Ceremonialista não encontrado"));
+            .orElseThrow(() -> new InvalidDataException("Cerimonialista não encontrado"));
 
         updateCeremonialistData(ceremonialist, request);
 
@@ -58,8 +63,6 @@ public class CeremonialistService {
     // Funções de Auxílio
 
     private Ceremonialist addDataToCeremonialist(CreateCeremonialist request) {
-
-        // Verificação de Email já cadastrado
         if (ceremonialistRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new EmailAlreadyExistsException("Email já cadastrado.");
         }
@@ -76,7 +79,6 @@ public class CeremonialistService {
     }
 
     private void updateCeremonialistData(Ceremonialist ceremonialist, CreateCeremonialist request) {
-
         ceremonialist.setName(request.getName());
         ceremonialist.setEmail(request.getEmail());
         ceremonialist.setPassword(request.getPassword());
@@ -89,11 +91,9 @@ public class CeremonialistService {
     }
 
     private Address getAddressByCep(CreateCeremonialist request) {
-
         CepResponse cepResponse = viaCepClient.getAddressByCep(request.getCep());
-        
         if (cepResponse == null) {
-            throw new RuntimeException("Endereço não encontrado para o CEP: " + request.getCep());
+            throw new InvalidDataException("CEP inválido ou não encontrado.");
         }
 
         Address address = new Address();
@@ -104,21 +104,13 @@ public class CeremonialistService {
         address.setStreet(cepResponse.getLogradouro());
         address.setHouseNumber(request.getHouseNumber());
 
-        addressRepository.save(address);
-
-        return address;
+        return addressRepository.save(address);
     }
 
     private void updateAddress(Address address, CreateCeremonialist request) {
-
-        if (address == null) {
-            throw new RuntimeException("Endereço não encontrado para atualização.");
-        }
-
         CepResponse cepResponse = viaCepClient.getAddressByCep(request.getCep());
-
         if (cepResponse == null) {
-            throw new RuntimeException("Endereço não encontrado para o CEP: " + request.getCep());
+            throw new InvalidDataException("CEP inválido ou não encontrado.");
         }
 
         address.setCep(request.getCep());
@@ -129,5 +121,26 @@ public class CeremonialistService {
         address.setHouseNumber(request.getHouseNumber());
 
         addressRepository.save(address);
+    }
+
+    private void validateCeremonialistData(CreateCeremonialist request) {
+        if (request.getName() == null || request.getName().isBlank()) {
+            throw new InvalidDataException("O nome do cerimonialista é obrigatório.");
+        }
+        if (request.getEmail() == null || !request.getEmail().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+            throw new InvalidDataException("Email inválido.");
+        }
+        if (request.getPassword() == null || request.getPassword().length() < 8) {
+            throw new InvalidDataException("A senha deve ter pelo menos 8 caracteres.");
+        }
+        if (request.getDocument() == null || request.getDocument().length() != 11) {
+            throw new InvalidDataException("Documento inválido. Deve conter 11 caracteres.");
+        }
+        if (request.getPhone() == null || !request.getPhone().matches("^\\+?[1-9][0-9]{1,14}$")) {
+            throw new InvalidDataException("Número de telefone inválido.");
+        }
+        if (request.getCep() == null || !request.getCep().matches("\\d{8}")) {
+            throw new InvalidDataException("CEP inválido.");
+        }
     }
 }

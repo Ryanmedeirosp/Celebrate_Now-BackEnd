@@ -39,31 +39,19 @@ public class ClientService {
     public List<GetClients> getAllClients(Integer idCeremonialist) {
         List<Client> clients = clientRepository.findAllByCeremonialistId(idCeremonialist);
         List<GetClients> response = new ArrayList<>();
-        for (Client client : clients) {
-            response.add(new GetClients(client.getName(), client.getEmail(), client.getPhone()));
-        }
+        clients.forEach(client -> response.add(new GetClients(client.getName(), client.getEmail(), client.getPhone())));
         return response;
     }
 
     public void createClient(CreateClient request) {
         Ceremonialist ceremonialist = ceremonialistRepository.findByEmail(request.getCeremonialistEmail())
-            .orElseThrow(() -> new InvalidClientDataException("Ceremonialista não encontrado"));
+            .orElseThrow(() -> new InvalidClientDataException("Cerimonialista não encontrado"));
 
         validateClientData(request);
 
-        Address address = getAddressByCep(request);
+        Address address = createOrUpdateAddress(null, request);
 
-        Client client = new Client();
-        client.setName(request.getName());
-        client.setEmail(request.getEmail());
-        client.setPassword(request.getPassword());
-        client.setCpf(request.getCpf());
-        client.setBirthday(request.getBirthday());
-        client.setPhone(request.getPhone());
-        client.setCeremonialist(ceremonialist);
-        client.setBudget(new ArrayList<>());
-        client.setAddress(address);
-
+        Client client = buildClient(request, ceremonialist, address);
         clientRepository.save(client);
     }
 
@@ -73,19 +61,18 @@ public class ClientService {
 
         validateClientData(request);
 
-        client.setName(request.getName());
-        client.setEmail(request.getEmail());
-        client.setPassword(request.getPassword());
-        client.setCpf(request.getCpf());
-        client.setBirthday(request.getBirthday());
-        client.setPhone(request.getPhone());
+        Address updatedAddress = createOrUpdateAddress(client.getAddress(), request);
 
-        updateAddress(client.getAddress(), request);
-
+        updateClientData(client, request, updatedAddress);
         clientRepository.save(client);
     }
 
+    // Métodos auxiliares
+
     private void validateClientData(CreateClient request) {
+        if (request.getName() == null || request.getName().isBlank()) {
+            throw new InvalidClientDataException("O nome do cliente é obrigatório.");
+        }
         if (!isValidEmail(request.getEmail())) {
             throw new InvalidClientDataException("Email inválido.");
         }
@@ -95,15 +82,18 @@ public class ClientService {
         if (!isValidPhoneNumber(request.getPhone())) {
             throw new InvalidClientDataException("Número de telefone inválido.");
         }
+        if (request.getCep() == null || !request.getCep().matches("\\d{8}")) {
+            throw new InvalidClientDataException("CEP inválido.");
+        }
     }
 
-    private Address getAddressByCep(CreateClient request) {
+    private Address createOrUpdateAddress(Address existingAddress, CreateClient request) {
         CepResponse cepResponse = viaCepClient.getAddressByCep(request.getCep());
         if (cepResponse == null) {
             throw new InvalidClientDataException("CEP inválido ou não encontrado.");
         }
 
-        Address address = new Address();
+        Address address = (existingAddress == null) ? new Address() : existingAddress;
         address.setCep(request.getCep());
         address.setState(cepResponse.getEstado());
         address.setCity(cepResponse.getLocalidade());
@@ -114,20 +104,28 @@ public class ClientService {
         return addressRepository.save(address);
     }
 
-    private void updateAddress(Address address, CreateClient request) {
-        CepResponse cepResponse = viaCepClient.getAddressByCep(request.getCep());
-        if (cepResponse == null) {
-            throw new InvalidClientDataException("CEP inválido ou não encontrado.");
-        }
+    private Client buildClient(CreateClient request, Ceremonialist ceremonialist, Address address) {
+        Client client = new Client();
+        client.setName(request.getName());
+        client.setEmail(request.getEmail());
+        client.setPassword(request.getPassword());
+        client.setCpf(request.getCpf());
+        client.setBirthday(request.getBirthday());
+        client.setPhone(request.getPhone());
+        client.setCeremonialist(ceremonialist);
+        client.setBudget(new ArrayList<>());
+        client.setAddress(address);
+        return client;
+    }
 
-        address.setCep(request.getCep());
-        address.setState(cepResponse.getEstado());
-        address.setCity(cepResponse.getLocalidade());
-        address.setDistrict(cepResponse.getBairro());
-        address.setStreet(cepResponse.getLogradouro());
-        address.setHouseNumber(request.getHouseNumber());
-
-        addressRepository.save(address);
+    private void updateClientData(Client client, CreateClient request, Address updatedAddress) {
+        client.setName(request.getName());
+        client.setEmail(request.getEmail());
+        client.setPassword(request.getPassword());
+        client.setCpf(request.getCpf());
+        client.setBirthday(request.getBirthday());
+        client.setPhone(request.getPhone());
+        client.setAddress(updatedAddress);
     }
 
     private boolean isValidEmail(String email) {
