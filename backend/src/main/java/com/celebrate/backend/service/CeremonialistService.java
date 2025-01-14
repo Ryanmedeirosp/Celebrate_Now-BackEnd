@@ -66,6 +66,10 @@ public class CeremonialistService {
         if (ceremonialistRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new EmailAlreadyExistsException("Email já cadastrado.");
         }
+        
+        if (ceremonialistRepository.findByDocument(request.getDocument()).isPresent()) {
+            throw new InvalidDataException("CPF já cadastrado.");
+        }
 
         Ceremonialist ceremonialist = new Ceremonialist();
         ceremonialist.setName(request.getName());

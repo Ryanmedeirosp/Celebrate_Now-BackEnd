@@ -11,4 +11,5 @@ import com.celebrate.backend.models.Ceremonialist;
 public interface CeremonialistRepository extends JpaRepository<Ceremonialist, Integer>{
 
     Optional<Ceremonialist> findByEmail(String email);
+    Optional<Ceremonialist> findByDocument(String document);
 }
