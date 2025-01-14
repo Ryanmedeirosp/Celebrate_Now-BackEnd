@@ -24,9 +24,11 @@ public class BudgetController {
     private final BudgetService budgetService;
 
     @PostMapping()
-    public void createBudget(@RequestBody CreateBudget request){
+    public Integer createBudget(@RequestBody CreateBudget request){
 
-        budgetService.createBudget(request);
+        // budgetService.createBudget(request);
+        return budgetService.createBudget(request).getId();
+        
     }
 
     @GetMapping({"{idClient}"})

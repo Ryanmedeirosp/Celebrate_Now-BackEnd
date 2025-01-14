@@ -53,7 +53,8 @@ public class BudgetService {
         budget.setSupplier(supplier);
         budget.setContract(contract);
 
-        budgetRepository.save(budget);
+        budget = budgetRepository.save(budget);
+        
 
         return budget;
     }   
