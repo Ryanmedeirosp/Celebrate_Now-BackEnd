@@ -34,7 +34,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(InvalidDataException.class)
-    public ResponseEntity<ErrorDetails> handleInvalidDataException(InvalidClientDataException e, WebRequest request) {
+    public ResponseEntity<ErrorDetails> handleInvalidDataException(InvalidDataException e, WebRequest request) {
         ErrorDetails errorDetails = new ErrorDetails(
             LocalDateTime.now(),
             e.getMessage(),
