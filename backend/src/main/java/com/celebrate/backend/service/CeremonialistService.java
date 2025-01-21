@@ -3,6 +3,9 @@ package com.celebrate.backend.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.ObjectNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.celebrate.backend.client.ViaCepClient;
@@ -13,6 +16,8 @@ import com.celebrate.backend.models.Address;
 import com.celebrate.backend.models.Ceremonialist;
 import com.celebrate.backend.models.Client;
 import com.celebrate.backend.models.dto.CreateCeremonialist;
+import com.celebrate.backend.models.dto.GetCeremonialist;
+import com.celebrate.backend.models.dto.LoginCeremonialist;
 import com.celebrate.backend.repository.AddressRepository;
 import com.celebrate.backend.repository.CeremonialistRepository;
 
@@ -29,6 +34,29 @@ public class CeremonialistService {
         this.ceremonialistRepository = ceremonialistRepository;
         this.addressRepository = addressRepository;
         this.viaCepClient = viaCepClient;
+    }
+
+    public GetCeremonialist login(LoginCeremonialist request){
+        
+        Ceremonialist ceremonialist = ceremonialistRepository.findByEmail(request.getEmail())
+            .orElseThrow(() -> new InvalidDataException("Cerimonialista não encontrado"));
+
+        if (ceremonialist.getPassword().equals(request.getPassword())) {
+           
+            GetCeremonialist response = new GetCeremonialist(
+                ceremonialist.getName(),
+                ceremonialist.getEmail(),
+                ceremonialist.getDocument(),
+                ceremonialist.getBirthday(),
+                ceremonialist.getPhone());
+
+            return response;
+        }
+
+        else{
+            
+            return null;
+        }
     }
 
     public void createCeremonialist(CreateCeremonialist request) {
