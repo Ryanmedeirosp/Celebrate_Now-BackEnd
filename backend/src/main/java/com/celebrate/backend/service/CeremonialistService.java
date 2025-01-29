@@ -44,11 +44,9 @@ public class CeremonialistService {
         if (ceremonialist.getPassword().equals(request.getPassword())) {
            
             GetCeremonialist response = new GetCeremonialist(
+                ceremonialist.getId(),
                 ceremonialist.getName(),
-                ceremonialist.getEmail(),
-                ceremonialist.getDocument(),
-                ceremonialist.getBirthday(),
-                ceremonialist.getPhone());
+                ceremonialist.getEmail());
 
             return response;
         }

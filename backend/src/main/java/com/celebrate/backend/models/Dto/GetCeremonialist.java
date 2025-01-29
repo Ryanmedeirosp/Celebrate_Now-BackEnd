@@ -12,9 +12,7 @@ import lombok.NoArgsConstructor;
 
 public class GetCeremonialist {
 
+    Integer id;
     String name;
     String email;
-    String document;
-    LocalDate birthday;
-    String phone;
 }
