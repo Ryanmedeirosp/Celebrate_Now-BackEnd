@@ -40,7 +40,8 @@ public class SupplierService {
     public List<GetSupplier> getAllSupplier(Integer idCeremonialist) {
         List<Supplier> suppliers = supplierRepository.findAllByCeremonialistId(idCeremonialist);
         List<GetSupplier> response = new ArrayList<>();
-        suppliers.forEach(supplier -> response.add(new GetSupplier(supplier.getName(), supplier.getEmail(), supplier.getPhone(), supplier.getCnpj(), supplier.getAddress().getStreet())));
+        suppliers.forEach(supplier -> response.add(new GetSupplier(supplier.getName(), supplier.getEmail(), supplier.getPhone(), 
+        supplier.getCnpj(), supplier.getAddress().getStreet(), supplier.getAddress().getHouseNumber())));
         return response;
     }
 

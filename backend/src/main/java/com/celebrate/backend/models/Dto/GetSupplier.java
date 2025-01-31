@@ -9,13 +9,15 @@ public class GetSupplier {
     private String phone;
     private String cnpj;
     private String street;
+    private String number;
 
-    public GetSupplier(String name, String email, String phone, String cnpj, String street) {
+    public GetSupplier(String name, String email, String phone, String cnpj, String street, String number) {
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.street = street;
         this.cnpj = cnpj;
+        this.number = number;
     }
 
 }
