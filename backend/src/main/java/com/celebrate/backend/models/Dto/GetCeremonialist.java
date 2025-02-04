@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 public class GetCeremonialist {
-
     Integer id;
     String name;
     String email;
