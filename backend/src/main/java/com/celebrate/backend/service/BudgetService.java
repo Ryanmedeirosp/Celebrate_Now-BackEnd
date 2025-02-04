@@ -59,11 +59,14 @@ public class BudgetService {
         return budget;
     }   
 
-    public List<GetBudget> getBudgets(Integer clientId) {
+    public List<GetBudget> getBudgets(Integer clientId, Integer ceremonialistId) {
         List<Budget> budgets = budgetRepository.findAllByClientId(clientId);
         List<GetBudget> response = new ArrayList<>();
         
         for (Budget budget : budgets) {
+            if(budget.getClient().getCeremonialist().getId() != ceremonialistId) {
+                new RuntimeException();
+            }
             
              BigDecimal totalAmount = budget.getItems().stream()
                                        .map(Item::getPrice) // Substitua "getPrice" pelo nome real do método que retorna o preço.
