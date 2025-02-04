@@ -17,12 +17,14 @@ public class GetBudget {
     private LocalDate date;
     private List<Item> items;
     private UUID contract;
+    private Integer ceremonialistId;
     private BigDecimal totalAmount;
 
-    public GetBudget(String supplier, String client, LocalDate date, List<Item> items, UUID contract, BigDecimal totalAmount) {
+    public GetBudget(String supplier, String client, LocalDate date,Integer ceremonialistId, List<Item> items, UUID contract, BigDecimal totalAmount) {
         this.supplier = supplier;
         this.client = client;
         this.date = date;
+        this.ceremonialistId = ceremonialistId;
         this.items = items;
         this.contract = contract;
         this.totalAmount = totalAmount;

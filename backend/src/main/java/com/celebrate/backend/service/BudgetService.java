@@ -75,6 +75,7 @@ public class BudgetService {
                     budget.getSupplier().getName(),
                     budget.getClient().getName(),
                     budget.getBuget_date(),
+                    budget.getClient().getCeremonialist().getId(),
                     budget.getItems(),
                     budget.getContract().getContract_number(),
                     totalAmount
@@ -84,6 +85,7 @@ public class BudgetService {
                     budget.getSupplier().getName(),
                     budget.getClient().getName(),
                     budget.getBuget_date(),
+                    budget.getClient().getCeremonialist().getId(),
                     budget.getItems(),
                     UUID.fromString("0"),
                     totalAmount
