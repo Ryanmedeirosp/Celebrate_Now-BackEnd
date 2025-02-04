@@ -31,8 +31,8 @@ public class BudgetController {
         
     }
 
-    @GetMapping({"{idClient}"})
-    public List<GetBudget> getBudget(@PathVariable Integer idClient) {
-        return budgetService.getBudgets(idClient);
+    @GetMapping({"{idClient}/{idCeremonialist}"})
+    public List<GetBudget> getBudget(@PathVariable Integer idClient, @PathVariable Integer idCeremonialist) {
+        return budgetService.getBudgets(idClient, idCeremonialist);
     }
 }
