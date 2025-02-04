@@ -39,7 +39,7 @@ public class ClientService {
     public List<GetClients> getAllClients(Integer idCeremonialist) {
         List<Client> clients = clientRepository.findAllByCeremonialistId(idCeremonialist);
         List<GetClients> response = new ArrayList<>();
-        clients.forEach(client -> response.add(new GetClients(client.getName(), client.getEmail(), client.getPhone())));
+        clients.forEach(client -> response.add(new GetClients(client.getName(), client.getEmail(), client.getPhone(), client.getId())));
         return response;
     }
 
