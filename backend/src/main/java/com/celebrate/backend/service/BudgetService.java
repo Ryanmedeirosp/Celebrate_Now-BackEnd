@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+
 
 import org.springframework.stereotype.Service;
 
@@ -80,7 +80,6 @@ public class BudgetService {
                     budget.getBuget_date(),
                     budget.getClient().getCeremonialist().getId(),
                     budget.getItems(),
-                    budget.getContract().getContract_number(),
                     totalAmount
                 ));
             } else {
@@ -90,7 +89,6 @@ public class BudgetService {
                     budget.getBuget_date(),
                     budget.getClient().getCeremonialist().getId(),
                     budget.getItems(),
-                    UUID.fromString("0"),
                     totalAmount
                 ));
             }
