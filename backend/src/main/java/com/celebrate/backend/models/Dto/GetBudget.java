@@ -19,8 +19,9 @@ public class GetBudget {
     private UUID contract;
     private Integer ceremonialistId;
     private BigDecimal totalAmount;
+    private Integer budgetId;
 
-    public GetBudget(String supplier, String client, LocalDate date,Integer ceremonialistId, List<Item> items, UUID contract, BigDecimal totalAmount) {
+    public GetBudget(String supplier, String client, LocalDate date,Integer ceremonialistId, List<Item> items, UUID contract, BigDecimal totalAmount, Integer budgetId) {
         this.supplier = supplier;
         this.client = client;
         this.date = date;
@@ -28,6 +29,7 @@ public class GetBudget {
         this.items = items;
         this.contract = contract;
         this.totalAmount = totalAmount;
+        this.budgetId = budgetId;
     }
 
 }
