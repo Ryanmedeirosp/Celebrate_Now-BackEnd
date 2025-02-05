@@ -54,7 +54,7 @@ public class ContractService {
                  contract.getPdf(),
                  contract.getBudget().getClient().getName(),
                  contract.getBudget().getClient().getCeremonialist().getName(),
-                 contract.getBudget().getSupplier().getName()));
+                 contract.getBudget().getSupplier().getName(), contract.getBudget().getBuget_date()));
             
            
         }

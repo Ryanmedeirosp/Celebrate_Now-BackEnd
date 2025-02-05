@@ -10,17 +10,20 @@ public class GetSupplier {
     private String cnpj;
     private String street;
     private String number;
-    private String typeService;
+    private String serviceType;
+    private String description;
+    private Integer id;
 
-    public GetSupplier(String name, String email, String phone, String cnpj, String street, 
-    String number, String typeService) {
+    public GetSupplier(String name, String email, String phone, String cnpj, String street, String number, String serviceType, String description, Integer id) {
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.street = street;
         this.cnpj = cnpj;
         this.number = number;
-        this.typeService = typeService;
+        this.description = description;
+        this.serviceType = serviceType;
+        this.id = id;
     }
 
 }
