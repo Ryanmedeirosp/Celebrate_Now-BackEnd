@@ -6,7 +6,7 @@ VALUES
 -- Adicionando um novo cliente para o Ceremonialista de ID 1
 INSERT INTO client (name, email, password, cpf, birthday, phone, id_cerimonialist, id_address)
 VALUES 
-('Mariana Souza', 'mariana.souza@email.com', 'cliente123', '22334455667', '1992-06-25', '1192233-4455', 1, 6);
+('Fernando Lima', 'fernando.lima@email.com', 'novaSenha456', '33445566778', '1990-09-12', '1193344-5566', 1, 6);
 
 -- Adicionando um orçamento para o novo cliente
 INSERT INTO budget (buget_date, id_supplier, id_client)

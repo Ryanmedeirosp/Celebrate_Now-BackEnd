@@ -80,8 +80,8 @@ public class BudgetService {
                     budget.getBuget_date(),
                     budget.getClient().getCeremonialist().getId(),
                     budget.getItems(),
-                    budget.getContract().getContract_number(),
-                    totalAmount
+                    totalAmount,
+                    budget.getId()
                 ));
             } else {
                 response.add(new GetBudget(
@@ -90,8 +90,8 @@ public class BudgetService {
                     budget.getBuget_date(),
                     budget.getClient().getCeremonialist().getId(),
                     budget.getItems(),
-                    UUID.fromString("0"),
-                    totalAmount
+                    totalAmount,
+                    budget.getId()
                 ));
             }
         }

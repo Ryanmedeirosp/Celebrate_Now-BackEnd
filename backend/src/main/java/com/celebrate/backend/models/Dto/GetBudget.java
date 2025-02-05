@@ -20,7 +20,7 @@ public class GetBudget {
     private BigDecimal totalAmount;
     private Integer budgetId;
 
-    public GetBudget(String supplier, String client, LocalDate date,Integer ceremonialistId, List<Item> items, BigDecimal totalAmount) {
+    public GetBudget(String supplier, String client, LocalDate date,Integer ceremonialistId, List<Item> items, BigDecimal totalAmount, Integer budgetId) {
         this.supplier = supplier;
         this.client = client;
         this.date = date;
