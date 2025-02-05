@@ -99,4 +99,24 @@ public class BudgetService {
         return response;
     }
     
+    public GetBudget getBudgetById(Integer id) {
+        Budget budget = budgetRepository.findById(id).orElse(null);
+        if (budget == null) {
+            throw new RuntimeException("Budget not found");
+        }
+
+        BigDecimal totalAmount = budget.getItems().stream()
+        .map(Item::getPrice) // Substitua "getPrice" pelo nome real do método que retorna o preço.
+        .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        return new GetBudget(
+                budget.getSupplier().getName(),
+                budget.getClient().getName(),
+                budget.getBuget_date(),
+                budget.getClient().getCeremonialist().getId(),
+                budget.getItems(),
+                totalAmount
+                );
+        }
+
 }
