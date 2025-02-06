@@ -115,7 +115,8 @@ public class BudgetService {
                 budget.getBuget_date(),
                 budget.getClient().getCeremonialist().getId(),
                 budget.getItems(),
-                totalAmount
+                totalAmount,
+                budget.getId()
                 );
         }
 
