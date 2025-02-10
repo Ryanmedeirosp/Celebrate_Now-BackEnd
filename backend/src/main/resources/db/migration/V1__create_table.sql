@@ -38,7 +38,8 @@ CREATE TABLE supplier(
     cnpj VARCHAR(14) NOT NULL,
     phone VARCHAR(25) NOT NULL,
     service_type VARCHAR(30) NOT NULL,
-    description TEXT NOT NULL, 
+    description TEXT NOT NULL,
+    image_url TEXT NOT NULL,
     id_cerimonialist INTEGER REFERENCES ceremonialist(id),
     id_address INTEGER REFERENCES address(id)
 );

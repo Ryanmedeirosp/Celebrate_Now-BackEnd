@@ -19,10 +19,10 @@ VALUES
 ('João Pedro', 'joao.pedro@email.com', 'cliente456', '98765432100', '1992-11-10', '1199988-7766', 2, 4);
 
 -- Populando a tabela supplier
-INSERT INTO supplier (name, email, cnpj, phone, service_type, description, id_cerimonialist, id_address)
+INSERT INTO supplier (name, email, cnpj, phone, service_type, description, image_url, id_cerimonialist, id_address)
 VALUES 
-('Buffet Delícia', 'contato@buffetdelicia.com', '12345678000199', '1190000-1234', 'Buffet', 'Serviço completo de buffet para eventos.', 1, 1),
-('Decoração & Cia', 'contato@decoracaocia.com', '98765432000188', '2195555-4321', 'Decoração', 'Decoração personalizada para casamentos.', 2, 2);
+('Buffet Delícia', 'contato@buffetdelicia.com', '12345678000199', '1190000-1234', 'Buffet', 'Serviço completo de buffet para eventos.', 'https://lapisdenoiva.com/wp-content/uploads/2021/10/convidados-do-casamento-no-buffet.jpg', 1, 1),
+('Decoração & Cia', 'contato@decoracaocia.com', '98765432000188', '2195555-4321', 'Decoração', 'Decoração personalizada para casamentos.', 'https://p2.trrsf.com/image/fget/cf/774/0/images.terra.com/2018/02/05/decoracao-de-casamento-em-casa-com-flores-vermelhas.jpg', 2, 2);
 
 -- Populando a tabela budget
 INSERT INTO budget (buget_date, id_supplier, id_client)
