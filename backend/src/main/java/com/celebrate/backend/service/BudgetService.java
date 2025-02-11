@@ -111,6 +111,7 @@ public class BudgetService {
         .map(Item::getPrice) // Substitua "getPrice" pelo nome real do método que retorna o preço.
         .reduce(BigDecimal.ZERO, BigDecimal::add);
 
+
         return new GetBudget(
                 budget.getSupplier().getName(),
                 budget.getClient().getName(),

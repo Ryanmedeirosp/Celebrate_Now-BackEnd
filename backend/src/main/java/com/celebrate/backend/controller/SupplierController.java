@@ -35,9 +35,9 @@ public class SupplierController {
         return supplierService.getAllSupplier(idCeremonialist);
     }
 
-    @PutMapping("/{ceremonialistId}")
-    public void updateCeremonialisById(@PathVariable Integer ceremonialistId, @RequestBody CreateSupplier request){
+    @PutMapping("/{supplierId}")
+    public void updateCeremonialisById(@PathVariable Integer supplierId, @RequestBody CreateSupplier request){
 
-        supplierService.updateSupplierById(ceremonialistId, request);
+        supplierService.updateSupplierById(supplierId, request);
     }
 }
