@@ -40,7 +40,8 @@ public class SupplierService {
     public List<GetSupplier> getAllSupplier(Integer idCeremonialist) {
         List<Supplier> suppliers = supplierRepository.findAllByCeremonialistId(idCeremonialist);
         List<GetSupplier> response = new ArrayList<>();
-        suppliers.forEach(supplier -> response.add(new GetSupplier(supplier.getName(), supplier.getEmail(), supplier.getPhone(), supplier.getCnpj(), supplier.getAddress().getStreet(), supplier.getAddress().getHouseNumber(), supplier.getServiceType(), supplier.getDescription(), supplier.getId(), supplier.getAddress().getCep())));
+
+        suppliers.forEach(supplier -> response.add(new GetSupplier(supplier.getName(), supplier.getEmail(), supplier.getPhone(), supplier.getCnpj(), supplier.getAddress().getStreet(), supplier.getAddress().getHouseNumber(), supplier.getServiceType(), supplier.getDescription(), supplier.getImageUrl(), supplier.getId(), supplier.getAddress().getCep())));
         return response;
     }
 
@@ -86,6 +87,9 @@ public class SupplierService {
         if (request.getCep() == null || !request.getCep().matches("\\d{8}")) {
             throw new InvalidDataException("CEP inválido.");
         }
+        if (request.getImageUrl() == null || request.getImageUrl().isBlank()) {
+            throw new InvalidDataException("Imagem obrigatória");
+        }
     }
 
     private Address createOrUpdateAddress(Address existingAddress, CreateSupplier request) {
@@ -113,6 +117,7 @@ public class SupplierService {
         supplier.setPhone(request.getPhone());
         supplier.setServiceType(request.getServiceType());
         supplier.setDescription(request.getDescription());
+        supplier.setImageUrl(request.getImageUrl());
         supplier.setCeremonialist(ceremonialist);
         supplier.setAddress(address);
         return supplier;
@@ -125,6 +130,7 @@ public class SupplierService {
         supplier.setPhone(request.getPhone());
         supplier.setServiceType(request.getServiceType());
         supplier.setDescription(request.getDescription());
+        supplier.setImageUrl(request.getImageUrl());
         supplier.setAddress(updatedAddress);
     }
 
