@@ -1,36 +1,38 @@
 ﻿# 🌹 Celebrate Back-End
 
-> Este é o Back-End do "Celebrate Now", um site dedicado ao gerenciamento de cerimonias de casamento.
+> Este é o Back-End do "Celebrate Now", um site dedicado ao gerenciamento de cerimônias de casamento.
 
 ## 📝 Sobre o Projeto
 
-A criação deste software de gerenciamento de casamento visa a melhoria da eficiência, organização e controle do trabalho dos cerimonialista de casamento, visando otimizar e organizar as múltiplas tarefas envolvidas na organização de um evento.
+A criação deste software de gerenciamento de casamento visa a melhoria da eficiência, organização e controle do trabalho dos cerimonialistas de casamento, visando otimizar e organizar as múltiplas tarefas envolvidas na organização de um evento.
 
 ## 🚀 Tecnologias Utilizadas  
 
 Este projeto foi desenvolvido com as seguintes tecnologias:
 
-- [Java 21]([https://tecnologia1.com](https://www.oracle.com/br/java/technologies/downloads/))
-- [Springboot]([https://tecnologia2.com](https://spring.io/))
+- [Java 21](https://www.oracle.com/br/java/technologies/downloads/)
+- [Spring Boot](https://spring.io/)
 
 ## ⚙️ Instalação  
 
 ### 🔧 Pré-requisitos  
 Antes de começar, você precisa ter instalado na sua máquina:  
-- **[Java](https://tecnologia1.com](https://www.oracle.com/br/java/technologies/downloads/))**  
+- **[Java](https://www.oracle.com/br/java/technologies/downloads/)**  
 - **[Git](https://git-scm.com/)**  
 
 ### 📥 Clone o Repositório
 
-git clone https://github.com/Ryanmedeirosp/Celebrate_Now-BackEnd
+```bash
+git clone https://github.com/Ryanmedeirosp/Celebrate_Now-BackEnd.git
+```
 
 ### 🛠 Configurações internas
 
-Renomeie main\java\com\celebrate\backend\models\ <em>Dto</em> para main\java\com\celebrate\backend\models\ <em>dto</em>.
+Renomeie `main\java\com\celebrate\backend\models\Dto` para `main\java\com\celebrate\backend\models\dto`.
 
-Alterar os seguintes parâmetros para utilizar o envio de emails:
+Altere os seguintes parâmetros para utilizar o envio de e-mails:
 
-``` 
+```properties
 spring.mail.username=MY_EMAIL_HERE
 spring.mail.password=MY_16_CHARACTER_PASSWORD_HERE
 spring.mail.properties.mail.smtp.auth=true
@@ -38,45 +40,48 @@ spring.mail.properties.mail.smtp.starttls.enable=true
 mail.debug=true
 ```
 
-Busque o arquivo <em>BackendApplication.java</em> e rode na sua máquina.
+Busque o arquivo `BackendApplication.java` e rode na sua máquina.
 
-Lembrando que esta é uma aplicação local, logo, você deve utlizar <em>http://localhost:8080</em> na sua URL para utilizá-la.
+Lembrando que esta é uma aplicação local, logo, você deve utilizar `http://localhost:8080` na sua URL para utilizá-la.
 
-## EndPoints
+## 📌 Endpoints
 
-### User
+Abaixo estão os principais endpoints disponíveis na API.
 
-Esses Endpoints referem-se aos Usuários.
+### 🏢 Supplier Controller
+- **PUT** `/supplier/{supplierId}` - Atualiza um fornecedor.
+- **POST** `/supplier` - Adiciona um novo fornecedor.
+- **GET** `/supplier/{idCeremonialist}` - Busca fornecedores de um cerimonialista.
 
-Rota: GET | /users
+### 👤 Client Controller
+- **PUT** `/client/{clientId}` - Atualiza um cliente.
+- **POST** `/client` - Adiciona um novo cliente.
+- **GET** `/client/{idCeremonialist}` - Busca clientes de um cerimonialista.
 
-Descrição: Seleciona todos os usuaários registrados.
+### 🎭 Ceremonialist Controller
+- **PUT** `/ceremonialist/{ceremonialistId}` - Atualiza um cerimonialista.
+- **POST** `/ceremonialist` - Adiciona um novo cerimonialista.
+- **POST** `/ceremonialist/login` - Realiza login de um cerimonialista.
 
-```
-{
-    "id": 0,
-    "name": "string",
-    "email": "string",
-    "registerDate": "2024-11-21",
-    "singleCard": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    "status": true,
-    "loans": [
-      {
-        "id": 0,
-        "startDate": "2024-11-21",
-        "devolutionDate": "2024-11-21",
-        "status": "EM_ANDAMENTO",
-        "books": [
-          {
-            "id": 0,
-            "title": "string",
-            "author": "string",
-            "isbn": "string",
-            "status": true,
-            "yearOfPublication": 0
-          }
-        ]
-      }
-    ]
-  }
-```
+### 📦 Items Controller
+- **POST** `/item` - Adiciona um item ao orçamento.
+- **GET** `/item/{idBudget}` - Busca itens de um orçamento.
+
+### ✉️ Email Controller
+- **POST** `/email` - Envia um e-mail.
+
+### 📜 Contract Controller
+- **POST** `/contract` - Adiciona um novo contrato.
+- **GET** `/contract/{budgetId}` - Busca contrato associado a um orçamento.
+
+### 💰 Budget Controller
+- **POST** `/budget` - Cria um orçamento.
+- **GET** `/budget/{idClient}/{idCeremonialist}` - Busca orçamento por cliente e cerimonialista.
+- **GET** `/budget/{idBudget}` - Busca um orçamento específico.
+
+## 👥 Equipe de Desenvolvedores
+- [Arthurdnl](https://github.com/Arthurdnl)
+- [juneonju](https://github.com/juneonju)
+- [Ryan Medeiros](https://github.com/Ryanmedeirosp)
+- [WSgabri3l](https://github.com/WSgabri3l)
+
