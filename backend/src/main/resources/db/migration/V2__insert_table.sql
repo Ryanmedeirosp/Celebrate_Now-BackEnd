@@ -1,7 +1,7 @@
 -- Populando a tabela address
 INSERT INTO address (cep, state, city, district, street, house_number)
 VALUES 
-('12345678', 'SP', 'São Paulo', 'Centro', 'Rua das Flores', '123'),
+('57037285', 'SP', 'São Paulo', 'Centro', 'Rua das Flores', '123'),
 ('87654321', 'RJ', 'Rio de Janeiro', 'Copacabana', 'Avenida Atlântica', '456'),
 ('45678123', 'MG', 'Belo Horizonte', 'Savassi', 'Rua Pernambuco', '789'),
 ('65432987', 'BA', 'Salvador', 'Pelourinho', 'Ladeira do Carmo', '321');
