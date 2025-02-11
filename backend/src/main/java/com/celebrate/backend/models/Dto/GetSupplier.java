@@ -8,6 +8,7 @@ public class GetSupplier {
     private String email;
     private String phone;
     private String cnpj;
+    private String cep;
     private String street;
     private String number;
     private String serviceType;
@@ -15,12 +16,13 @@ public class GetSupplier {
     private String imageUrl;
     private Integer id;
 
-    public GetSupplier(String name, String email, String phone, String cnpj, String street, String number, String serviceType, String description, String imageUrl, Integer id) {
+    public GetSupplier(String name, String email, String phone, String cnpj,String cep, String street, String number, String serviceType, String description, String imageUrl, Integer id) {
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.street = street;
         this.cnpj = cnpj;
+        this.cep = cep;
         this.number = number;
         this.description = description;
         this.imageUrl = imageUrl;

@@ -9,20 +9,20 @@ VALUES
 -- Populando a tabela ceremonialist
 INSERT INTO ceremonialist (name, email, password, document, birthday, phone, id_address)
 VALUES 
-('Ana Paula', 'ana.paula@email.com', 'senha123', '12345678901234', '1990-05-15', '1191234-5678', 1),
-('Carlos Silva', 'carlos.silva@email.com', 'senha456', '56789012345678', '1985-09-25', '2197654-3210', 2);
+('Ana Paula', 'ana.paula@email.com', 'senha123', '12345678901234', '1990-05-15', '11912345678', 1),
+('Carlos Silva', 'carlos.silva@email.com', 'senha456', '56789012345678', '1985-09-25', '21976543210', 2);
 
 -- Populando a tabela client
 INSERT INTO client (name, email, password, cpf, birthday, phone, id_cerimonialist, id_address)
 VALUES 
-('Mariana Souza', 'mariana.souza@email.com', 'cliente123', '12345678901', '1995-07-20', '3198877-6655', 1, 3),
-('João Pedro', 'joao.pedro@email.com', 'cliente456', '98765432100', '1992-11-10', '1199988-7766', 2, 4);
+('Mariana Souza', 'mariana.souza@email.com', 'cliente123', '12345678901', '1995-07-20', '31988776655', 1, 3),
+('João Pedro', 'joao.pedro@email.com', 'cliente456', '98765432100', '1992-11-10', '11999887766', 2, 4);
 
 -- Populando a tabela supplier
 INSERT INTO supplier (name, email, cnpj, phone, service_type, description, image_url, id_cerimonialist, id_address)
 VALUES 
-('Buffet Delícia', 'contato@buffetdelicia.com', '12345678000199', '1190000-1234', 'Buffet', 'Serviço completo de buffet para eventos.', 'https://lapisdenoiva.com/wp-content/uploads/2021/10/convidados-do-casamento-no-buffet.jpg', 1, 1),
-('Decoração & Cia', 'contato@decoracaocia.com', '98765432000188', '2195555-4321', 'Decoração', 'Decoração personalizada para casamentos.', 'https://p2.trrsf.com/image/fget/cf/774/0/images.terra.com/2018/02/05/decoracao-de-casamento-em-casa-com-flores-vermelhas.jpg', 2, 2);
+('Buffet Delícia', 'contato@buffetdelicia.com', '12345678000199', '11900001234', 'Buffet', 'Serviço completo de buffet para eventos.', 'https://lapisdenoiva.com/wp-content/uploads/2021/10/convidados-do-casamento-no-buffet.jpg', 1, 1),
+('Decoração & Cia', 'contato@decoracaocia.com', '98765432000188', '21955554321', 'Decoração', 'Decoração personalizada para casamentos.', 'https://p2.trrsf.com/image/fget/cf/774/0/images.terra.com/2018/02/05/decoracao-de-casamento-em-casa-com-flores-vermelhas.jpg', 2, 2);
 
 -- Populando a tabela budget
 INSERT INTO budget (buget_date, id_supplier, id_client)
