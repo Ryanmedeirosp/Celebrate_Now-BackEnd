@@ -45,7 +45,12 @@ public class ContractService {
 
     public List<GetContract> getContracts(Integer idBudget){
         budgetRepository.findById(idBudget).orElseThrow(()-> new RuntimeException("Orçamento não encontrada"));
-       
+
+        Budget budget = budgetRepository.findById(idBudget)
+            .orElseThrow(() -> new RuntimeException("Orçamento não encontrada"));
+
+        String clientEmail = budget.getClient().getEmail();
+
         List<Contract> contracts = contractRepository.findAllByBudgetId(idBudget);
         List<GetContract> response = new ArrayList<>();
         for (Contract contract : contracts) {
@@ -53,6 +58,7 @@ public class ContractService {
                 response.add(new GetContract(contract.getContract_number(),
                  contract.getPdf(),
                  contract.getBudget().getClient().getName(),
+                 clientEmail,
                  contract.getBudget().getClient().getCeremonialist().getName(),
                  contract.getBudget().getSupplier().getName(), contract.getBudget().getBuget_date()));
             

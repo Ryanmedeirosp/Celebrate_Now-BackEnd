@@ -22,7 +22,7 @@ import com.celebrate.backend.repository.SupplierRepository;
 
 @Service
 public class BudgetService {
-    
+
     private final BudgetRepository budgetRepository;
     private final ClientRepository clientRepository;
     private final SupplierRepository supplierRepository;
@@ -77,6 +77,7 @@ public class BudgetService {
                 response.add(new GetBudget(
                     budget.getSupplier().getName(),
                     budget.getClient().getName(),
+                    budget.getClient().getEmail(),
                     budget.getBuget_date(),
                     budget.getClient().getCeremonialist().getId(),
                     budget.getItems(),
@@ -87,6 +88,7 @@ public class BudgetService {
                 response.add(new GetBudget(
                     budget.getSupplier().getName(),
                     budget.getClient().getName(),
+                    budget.getClient().getEmail(),
                     budget.getBuget_date(),
                     budget.getClient().getCeremonialist().getId(),
                     budget.getItems(),
@@ -112,6 +114,7 @@ public class BudgetService {
         return new GetBudget(
                 budget.getSupplier().getName(),
                 budget.getClient().getName(),
+                budget.getClient().getEmail(),
                 budget.getBuget_date(),
                 budget.getClient().getCeremonialist().getId(),
                 budget.getItems(),

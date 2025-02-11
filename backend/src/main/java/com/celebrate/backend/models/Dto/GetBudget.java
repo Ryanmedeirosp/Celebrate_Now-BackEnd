@@ -14,15 +14,17 @@ import lombok.Data;
 public class GetBudget {
     private String supplier;
     private String client;
+    private String clientEmail;
     private LocalDate date;
     private List<Item> items;
     private Integer ceremonialistId;
     private BigDecimal totalAmount;
     private Integer budgetId;
 
-    public GetBudget(String supplier, String client, LocalDate date,Integer ceremonialistId, List<Item> items, BigDecimal totalAmount, Integer budgetId) {
+    public GetBudget(String supplier, String client, String clientEmail, LocalDate date,Integer ceremonialistId, List<Item> items, BigDecimal totalAmount, Integer budgetId) {
         this.supplier = supplier;
         this.client = client;
+        this.clientEmail = clientEmail;
         this.date = date;
         this.ceremonialistId = ceremonialistId;
         this.items = items;
