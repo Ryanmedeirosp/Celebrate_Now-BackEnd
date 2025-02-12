@@ -33,4 +33,10 @@ public class ContractController {
         return contractService.getContracts(budgetId);
     }
 
+    @PostMapping("/signContract/{budgetId}")
+    public void signContract(@PathVariable Integer budgetId){
+
+        contractService.changeContractStatus(budgetId);
+    }
+
 }

@@ -19,6 +19,6 @@ VALUES
 (7000.00, 'Pacote Completo de Casamento', 'Inclui buffet, decoração e DJ.', 3);
 
 -- Adicionando um contrato para o orçamento do novo cliente
-INSERT INTO contract (contract_number, pdf, id_budget)
+INSERT INTO contract (contract_number, pdf, signed, id_budget)
 VALUES 
-('770a8400-e29b-51d4-a716-667755440222', 'wedding_package_contract.pdf', 3);
+('770a8400-e29b-51d4-a716-667755440222', 'wedding_package_contract.pdf', false, 3);

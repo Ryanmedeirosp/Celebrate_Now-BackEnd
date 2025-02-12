@@ -19,6 +19,9 @@ public class Contract {
     @Column(name = "pdf", nullable = false, columnDefinition = "TEXT")
     private String pdf;
 
+    @Column(name = "signed", nullable = false)
+    private Boolean signed;
+
     @Column(name="contract_number", nullable = false)
     private UUID contract_number;
 

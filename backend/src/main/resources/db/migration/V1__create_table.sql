@@ -64,5 +64,6 @@ CREATE TABLE contract(
     id SERIAL PRIMARY KEY NOT NULL,
     contract_number UUID NOT NULL,
     pdf TEXT NOT NULL,
+    signed BOOLEAN,
     id_budget INTEGER REFERENCES budget(id)
 );

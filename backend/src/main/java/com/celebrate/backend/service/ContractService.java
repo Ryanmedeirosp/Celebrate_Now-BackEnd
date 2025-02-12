@@ -34,10 +34,8 @@ public class ContractService {
         }
 
         contract.setPdf(request.getPdf());
-
-       
+        contract.setSigned(false);
         contract.setBudget(budget);
-
         contract.setContract_number(UUID.randomUUID());
 
         contractRepository.save(contract);
@@ -57,14 +55,25 @@ public class ContractService {
           
                 response.add(new GetContract(contract.getContract_number(),
                  contract.getPdf(),
+                 contract.getSigned(),
                  contract.getBudget().getClient().getName(),
                  clientEmail,
                  contract.getBudget().getClient().getCeremonialist().getName(),
                  contract.getBudget().getSupplier().getName(), contract.getBudget().getBuget_date()));
-            
-           
         }
         return response; 
+    }
+
+    public void changeContractStatus(Integer idBudget){
+
+        List<Contract> contracts = contractRepository.findAllByBudgetId(idBudget);
+
+        for (Contract contract : contracts) {
+            
+            contract.setSigned(true);
+        }
+
+        contractRepository.saveAll(contracts);
     }
 
 

@@ -37,7 +37,7 @@ VALUES
 (3000.00, 'Decoração Floral', 'Decoração com flores naturais para salão principal.', 2);
 
 -- Populando a tabela contract
-INSERT INTO contract (contract_number, pdf, id_budget)
+INSERT INTO contract (contract_number, pdf, signed, id_budget)
 VALUES 
-('550e8400-e29b-41d4-a716-446655440000', 'buffet_contract_ana.pdf', 1),
-('660f8400-e29b-11d4-a716-556655440111', 'decor_contract_joao.pdf', 2);
+('550e8400-e29b-41d4-a716-446655440000', 'buffet_contract_ana.pdf', false, 1),
+('660f8400-e29b-11d4-a716-556655440111', 'decor_contract_joao.pdf', false, 2);
