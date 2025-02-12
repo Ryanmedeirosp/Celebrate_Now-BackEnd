@@ -32,12 +32,21 @@ Renomeie `main\java\com\celebrate\backend\models\Dto` para `main\java\com\celebr
 
 Altere os seguintes parâmetros para utilizar o envio de e-mails:
 
-```properties
+1. Properties
+
+```
 spring.mail.username=MY_EMAIL_HERE
 spring.mail.password=MY_16_CHARACTER_PASSWORD_HERE
 spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.starttls.enable=true
 mail.debug=true
+```
+
+2. Web Config
+
+```
+mailSender.setUsername("MY_EMAIL_HERE");
+mailSender.setPassword("MY_16_CHARACTER_PASSWORD_HERE");
 ```
 
 Busque o arquivo `BackendApplication.java` e rode na sua máquina.
